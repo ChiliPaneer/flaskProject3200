@@ -40,6 +40,8 @@ if __name__ == '__main__':
     app.run()
 
 
+# https://docs.sqlalchemy.org/en/14/dialects/mysql.html#mysql-data-types
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(Integer, primary_key=True)
