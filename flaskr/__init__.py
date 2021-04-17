@@ -7,45 +7,22 @@ from sqlalchemy.orm import sessionmaker
 import datetime
 
 from sqlalchemy import Table, MetaData, Column, Integer, String, TIMESTAMP, DATETIME, Enum
-from sqlalchemy.schema import FetchedValue
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
 
 
-@app.route('/')
-def hello_world():
-    test_user =
-
-    return 'Hello World!'
-
-
 db = SQLAlchemy(app)
 
-Base = automap_base()
 
 engine = create_engine(
     'mysql+pymysql://root:P@ssw0rd@localhost/python_test',
     echo=True
 )
+Session = sessionmaker(bind=engine)
 
-
-
-if __name__ == '__main__':
-    app.run()
-
-
-# https://docs.sqlalchemy.org/en/14/dialects/mysql.html#mysql-data-types
-
-class CategoryEnum(enum.Enum):
-    airplane = 'airplane'
-    rotorcraft = 'rotorcraft'
-    glider = 'glider'
-    poweredPara = 'powered parachute'
-    lighter = 'lighter than air'
-    poweredLift = 'powered lift'
-    weightShift = 'weight shift control'
 
 
 class Users(db.Model):
@@ -60,17 +37,48 @@ class Users(db.Model):
     updated = Column(DATETIME, default=datetime.datetime.now, onupdate=datetime.datetime.now)
     email = Column(String(45), default="ex@mail.com")
 
+@app.route('/')
+def hello_world():
+    # return "hello world"
+    session = Session()
+
+    test_user = session.query(Users)[0]
+
+    return 'Hello World!' + test_user.first_name
+
+if __name__ == '__main__':
+    app.run()
+
+
+# https://docs.sqlalchemy.org/en/14/dialects/mysql.html#mysql-data-types
+
+# class CategoryEnum(enum.Enum):
+#     airplane = 'airplane'
+#     rotorcraft = 'rotorcraft'
+#     glider = 'glider'
+#     poweredPara = 'powered parachute'
+#     lighter = 'lighter than air'
+#     poweredLift = 'powered lift'
+#     weightShift = 'weight shift control'
+#
+#
+
+
 # class Aircrafts(db.Model):
 #     __tablename__ = 'aircrafts'
 #     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
 #     airClass = Column('class', String(45))
 #     type = Column(String(45))
 #     identification = Column
+#
+#
+# class Logs(db.Model):
+#     __tablename__ = 'logs'
+#
+#
+# class Ratings(db.Model):
+#     __tablename__ = 'ratings'
 
 
-class Logs(db.Model):
-    __tablename__ = 'logs'
 
 
-class Ratings(db.Model):
-    __tablename__ = 'ratings'
