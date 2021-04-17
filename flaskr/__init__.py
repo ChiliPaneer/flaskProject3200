@@ -37,7 +37,7 @@ def create_app(test_config=None):
     db.init_app(app)
 
     with app.app_context():
-        from . import routes  # Import routes
+        from flaskr.DAOs import routes
         db.create_all()  # Create sql tables for our data models
 
         return app
