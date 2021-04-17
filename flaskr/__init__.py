@@ -1,11 +1,12 @@
+import enum
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
+import datetime
 
-from sqlalchemy import Table, MetaData, Column, Integer, String, TIMESTAMP, DATETIME
-from sqlalchemy import text
+from sqlalchemy import Table, MetaData, Column, Integer, String, TIMESTAMP, DATETIME, Enum
 from sqlalchemy.schema import FetchedValue
 
 app = Flask(__name__)
@@ -15,7 +16,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
 
 @app.route('/')
 def hello_world():
+    test_user =
+
     return 'Hello World!'
+
 
 db = SQLAlchemy(app)
 
@@ -26,14 +30,6 @@ engine = create_engine(
     echo=True
 )
 
-Base.prepare(engine, reflect=True)
-user = Base.classes.users
-session = Session(engine)
-res = session.query(user).first()
-print(res.first_name)
-
-print('hello')
-print('new feautre on demoBranch')
 
 
 if __name__ == '__main__':
@@ -42,21 +38,39 @@ if __name__ == '__main__':
 
 # https://docs.sqlalchemy.org/en/14/dialects/mysql.html#mysql-data-types
 
-class User(db.Model):
+class CategoryEnum(enum.Enum):
+    airplane = 'airplane'
+    rotorcraft = 'rotorcraft'
+    glider = 'glider'
+    poweredPara = 'powered parachute'
+    lighter = 'lighter than air'
+    poweredLift = 'powered lift'
+    weightShift = 'weight shift control'
+
+
+class Users(db.Model):
     __tablename__ = 'users'
-    id = db.Column(Integer, primary_key=True)
+    id = db.Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     first_name = Column(String(45))
     last_name = Column(String(45))
-    username = Column(String(45))
-    password = Column(String(45))
-    date_of_birth = Column(
-        DATETIME,
-        server_default=text("CURRENT_DATETIME ON UPDATE CURRENT_DATETIME"),
-        #server_onupdate=FetchedValue()
-    )
+    username = Column(String(45), nullable=False)
+    password = Column(String(45), nullable=False)
+    date_of_birth = Column(DATETIME, default=datetime.datetime.now)
+    created = Column(DATETIME, default=datetime.datetime.now)
+    updated = Column(DATETIME, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    email = Column(String(45), default="ex@mail.com")
+
+# class Aircrafts(db.Model):
+#     __tablename__ = 'aircrafts'
+#     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+#     airClass = Column('class', String(45))
+#     type = Column(String(45))
+#     identification = Column
 
 
+class Logs(db.Model):
+    __tablename__ = 'logs'
 
 
-
-
+class Ratings(db.Model):
+    __tablename__ = 'ratings'
