@@ -3,6 +3,7 @@ from datetime import datetime as dt
 from flask import current_app as app
 from flaskr.models import db, users
 
+
 # attribution: Todd Birchard @hackersandslackers.com
 
 @app.route('/users', methods=['GET', 'POST'])
@@ -15,66 +16,70 @@ def create_users():
     date_of_birth = request.form['date_of_birth']
     email = request.form['email']
 
+    if first_name and last_name and username and password and date_of_birth and email:
+        new_user = users(
 
-    if a_class and a_type and identification and category:
-        new_aircrafts = aircrafts(
-
-            # TODO how to rep. date_of_birth input
+            # TODO how to take in dob input? datetime obj? str?
             first_name=first_name,
             last_name=last_name,
             username=username,
-            password = password,
-            category=category,
+            password=password,
             date_of_birth=dt.fromisoformat(date_of_birth),
             created=dt.now(),
             updated=dt.now(),
-            email = email
+            email=email
 
         )
-        db.session.add(new_aircrafts)  # Adds new User record to database
+        db.session.add(new_user)  # Adds new User record to database
         db.session.commit()  # Commits all changes
 
     return render_template('list.html')
 
 
-@app.route('/aircrafts', methods=['GET', 'POST'])
-def findAll_aircrafts():
-    aircrafts = db.session.query(aircrafts).all()
-    return render_template('list.html', aircrafts)
+@app.route('/users', methods=['GET', 'POST'])
+def findAll_users():
+    userlist = db.session.query(users).all()
+    return render_template('list.html', userlist)
 
 
-@app.route('/aircrafts'/ 'id', methods=['GET', 'POST'])
-def findByID_aircrafts(id):
-    aircrafts = db.session.query(aircrafts).get(id)
-    return render_template('list.html', aircrafts)
+@app.route('/users' / 'id', methods=['GET', 'POST'])
+def findByID_users(id):
+    user = db.session.query(users).get(id)
+    return render_template('list.html', user)
 
 
-@app.route('/aircrafts'/ 'id', methods=['GET', 'POST'])
-def update_aircrafts(id):
-    # which aircraft is being updated
-    aircraft = db.session.query(aircrafts).get(id)
+@app.route('/users' / 'id', methods=['GET', 'POST'])
+def update_users(id):
+    # which user is being updated
+    user = db.session.query(users).get(id)
 
     # get updated fields
-    a_class = request.form['a_class']
-    a_type = request.form['type']
-    identification = request.form['identification']
-    category = request.form['category']
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    username = request.form['username']
+    password = request.form['password']
+    date_of_birth = request.form['date_of_birth']
+    email = request.form['email']
 
     # check if fields are filled and replace if filled
-    if a_class:
-        aircraft.a_class = a_class
-    if a_type:
-        aircraft.type = a_type
-    if identification:
-        aircraft.identification = identification
-    if category:
-        aircraft.category = category
+    if first_name:
+        user.first_name = first_name
+    if last_name:
+        user.last_name = last_name
+    if username:
+        user.username = username
+    if password:
+        user.password = password
+    if date_of_birth:
+        user.date_of_birth = date_of_birth
+    if email:
+        user.email = email
     db.session.commit()
 
 
-@app.route('/aircrafts' / 'id', methods=['GET', 'POST'])
-def delete_aircrafts(id):
+@app.route('/users' / 'id', methods=['GET', 'POST'])
+def delete_users(id):
     # id = int(request.form['id'])
-    obj = db.session.query(aircrafts).filter(aircrafts.id == id).first()
+    obj = db.session.query(users).filter(users.id == id).first()
     db.session.delete(obj)
     db.session.commit()
