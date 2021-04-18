@@ -7,7 +7,7 @@ from flaskr.models import db, aircrafts
 
 @app.route('/aircrafts', methods=['GET', 'POST'])
 def create_aircrafts():
-    """Create a user via query string parameters."""
+    """Create a route via query string parameters."""
     a_class = request.form['a_class']
     a_type = request.form['type']
     identification = request.form['identification']
