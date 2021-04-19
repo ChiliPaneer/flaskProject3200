@@ -77,7 +77,8 @@ class Logs(db.Model):
     dual_received = Column(DECIMAL(10, 1))
     dual_given = Column(DECIMAL(10, 1))
     actual_instrument = Column(DECIMAL(10, 1))
-    simulated_instrumet = Column(DECIMAL(10, 1))
+    # make this instrument in datbase
+    simulated_instrument = Column(DECIMAL(10, 1))
     departure = Column(String(4))
     destination = Column(String(4))
     via = Column(String(4))
@@ -107,6 +108,8 @@ class Ratings(db.Model):
 
     user_id = Column(Integer, ForeignKey('users.id'))
 
+
+    # change to ratings_to_users in database
     ratings_to_users = relationship("Users")  # , back_populates="ratings")
 
 
