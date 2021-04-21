@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        {#table{#}
+        {#    display: block;#}
+        {#    max-width: -moz-fit-content;#}
+        {#    max-width: fit-content;#}
+        {#    margin: 0 auto;#}
+        {#    overflow-x: auto;#}
+        {#    white-space: nowrap;#}
+        {# } #}
+
+    </style>
+</head>
+<body>
+
+
+<h1>{{ string }}</h1>
+
+<button onclick = "window.location.href= '/create/{{ string }}'" type="button" name = "create">Create New {{ string }}</button>
+<button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
+
+<h3>Click on an entry in the table to edit the entry</h3>
+
+
+
+
+<table style = "width:100%">
+    <tr> {# Head of the table #}
+        {% for item in data %}
+            <th>{{ item }}</th>
+        {% endfor %}
+    </tr>
+
+
+
+    {% for item in data[1:] %} {# goes through each row in the table #}
+
+        <tr onclick="window.location.href='/create/{{ string }}/{{ item[0] }}';">
+            {% for i in item %}
+                <td>{{ i }}</td> {# Goes through each entry in the row #}
+            {% endfor %}
+        </tr>
+
+    {% endfor %}
+
+
+
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/", method="post">
+
+    <label for="id">ID:</label><br>
+    <input type="text" id="id" name="id" value="{{ id }}"><br>
+
+    <label for="class">Class:</label><br>
+    <input type="text" id="class" name="class" value="{{ class }}"><br>
+
+    <label for="type">Type:</label><br>
+    <input type="type" id="type" name="type" value="{{ type }}"><br>
+
+    <label for="identification">Identification:</label><br>
+    <input type="text" id="identification" name="identification" value="{{ identification }}"><br>
+
+    <label for="category">Category:</label><br>
+    <input type="text" id="category" name="category" value="{{ category }}"><br>
+
+    <input type="submit" value = "Submit">
+
+</form>
+
+
+{% if id is defined %}
+    <button onclick = "window.location.href= '/delete/aircraft/{{ id }}'" type="button" name = "delete">Delete</button>
+{% endif %}
+<button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
+<button onclick="window.location.href = '/list/aircraft'" type = "button" name = "aircraftlist">Return to List</button>
+
+</body>
+</html>
