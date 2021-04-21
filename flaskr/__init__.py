@@ -9,7 +9,11 @@ db = SQLAlchemy()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:C9Sneaky@localhost/python_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
-
+engine = create_engine(
+    'mysql+pymysql://root:C9Sneaky@localhost/python_test',
+    echo=True
+)
+session = Session(engine)
 db = SQLAlchemy(app)
 
 @app.route('/')
@@ -38,11 +42,10 @@ def create_app(test_config=None):
 
     with app.app_context():
         from flaskr.DAOs import routes
+        from flaskr.DAOs import users
         db.create_all()  # Create sql tables for our data models
 
         return app
-
-
 
 Base = automap_base()
 engine = create_engine(

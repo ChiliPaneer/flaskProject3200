@@ -1,3 +1,4 @@
+'''
 from flask import request, render_template, make_response
 from datetime import datetime as dt
 from flask import current_app as app
@@ -72,3 +73,4 @@ def delete_aircrafts(id):
     obj = db.session.query(aircrafts).filter(aircrafts.id == id).first()
     db.session.delete(obj)
     db.session.commit()
+'''

@@ -36,7 +36,7 @@ table, th, td {
 {#    </tr>#}
 {#</table>#}
 {{ string }}
-<button onclick = "location.href= 'create/{{ string }}'" type="button" name = "create">Create New User</button>
+<button onclick = "location.href= 'create/{{ url_for('flaskr.DAOs.users.create_users' )}}'" type="button" name = "create">Create New User</button>
 
 
 
