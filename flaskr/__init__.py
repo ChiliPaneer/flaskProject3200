@@ -11,6 +11,7 @@ from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateE
 import DAO.users as userDAO
 import DAO.logs as logDAO
 import DAO.ratings as ratingDAO
+from datetime import datetime
 # Configuring SQL Alchemy, don't touch
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
@@ -249,10 +250,10 @@ def create_log():
         user_id = request.form.get('user_id')
         aircraft_id = request.form.get('aircraft_id')
         remarks = request.form.get('remarks')
-        date = request.form.get('date')
-        # logDAO.creatLog(sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received, dual_given,
-        # actual_instrument, simulated_instrument, departure, destination, via, day_landings, night_landings,
-        # num_instrument_approaches, user_id, aircraft_id, date, remarks)
+        date = datetime.strptime(request.form.get('date'), '%dd/%mm/%yyyy')
+        logDAO.createLog(sic_time = sic_time, total_time = total_time, pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time, dual_received = dual_received,
+        dual_given = dual_given, actual_instrument = actual_instrument, simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via, day_landings = day_landings,
+        night_landings = night_landings, num_instrument_approaches = num_instrument_approaches, user_id = user_id, aircraft_id = aircraft_id, remarks = remarks, date = date)
         print(sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received, dual_given,
               actual_instrument, simulated_instrument, departure, destination, via, day_landings, night_landings,
               num_instrument_approaches, user_id, aircraft_id, date, remarks)

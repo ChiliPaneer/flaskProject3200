@@ -46,7 +46,11 @@
 
         <tr onclick="window.location.href='/create/{{ string }}/{{ item[testing] }}';">
             {% for i in item %}
-                <td>{{ i }}</td> {# Goes through each entry in the row #}
+                {% if i == None %}
+                    <td></td>
+                {% else %}
+                    <td>{{ i }}</td> {# Goes through each entry in the row #}
+                {% endif %}
             {% endfor %}
         </tr>
 

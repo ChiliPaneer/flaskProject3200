@@ -2,7 +2,7 @@
 from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
 
 
-def createLogs(**kwargs):
+def createLog(**kwargs):
     newLog = Logs(
         sic_time = kwargs.get('sic_time', None),
         total_time=kwargs.get('total_time', None),
