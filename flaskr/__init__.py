@@ -6,7 +6,7 @@ ADRIAN: Update the route methods to accoutn for posting and passing in
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
 import DAO.users as userDAO
 # Configuring SQL Alchemy, don't touch
@@ -37,70 +37,276 @@ def findAll_users():
 
 # LISTING
 @app.route('/', methods = ['POST','GET'])
-def hello_world():
+def landing():
     return render_template('landing.html')
 
 @app.route('/list/user', methods = ['POST','GET'])
 def users_list():
-    #data = #userDAO.findAllUsers()
-    return render_template('list.html', string = 'user', data = [[0,1],[0,1]])
+    #d = #userDAO.findAllUsers()
+    return render_template('list.html', string = 'user', data = d)
 
 @app.route('/list/aircraft', methods = ['POST','GET'])
 def aircrafts_list():
-    return render_template('list.html', string = 'aircraft',data = [[0,1],[0,1]])
+    #d = aircraftDAO.findAllAircrafts()
+    return render_template('list.html', string = 'aircraft',data = d)
 
 @app.route('/list/log', methods = ['POST','GET'])
 def logs_list():
-    return render_template('list.html', string = 'log', data = [[0,1],[0,1]])
+    # d = logDAO.findAllAircrafts()
+    return render_template('list.html', string = 'log', data = d)
+
+@app.route('/list/rating', methods = ["POST",'GET'])
+def ratings_list():
+    #d = ratingDAO.findAllRatings()
+    return render_template('list.html', string = 'rating', data = d)
 
 
 # UPDATING
+@app.route('/create/rating/<id>', methods = ['POST','GET'])
+def update_rating(id):
+    if request.method == "POST":
+        certificate = request.form.get('certificate')
+        category = request.form.get('category')
+        r_class = request.form.get('r_class')
+        type = request.form.get('type')
+        instrument = request.form.get('instrument')
+        user_id = request.form.get('user_id')
+        #ratingDAO.updateRating(id, certificate, category, r_class, type, instrument, user_id)
+        print(id, certificate, category, r_class, type, instrument, user_id)
+        print("update")
+        return redirect('/') #replace
+    else:
+        # r = ratingDAO.findRatingById(id)
+        # certificate = r.getCertificate()
+        # category = r.getCategory()
+        # r_class = r.getClass()
+        # type = r.getType()
+        # instrument = r.getInstrument
+        # user_id = r.getUser_id
+        # return render_template('ratings_edit.html', certificate = certificate, category = category, r_class = r_class,
+        #                       type = type, instrument = instrument, user_id = user_id)
+        return render_template('ratings_edit.html', id = id)
+
+
 @app.route('/create/user/<id>', methods=['POST','GET'])
 def update_user(id):
-    # if post:
-    #     userDAO.creatUser(requests.form['key'],...)
-    if not id:
-        return render_template('user_edit.html')
-    elif id:
-        #get all the information about the id#
-        return render_template('user_edit.html', id = "4")
+    if request.method == "POST":
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        date_of_birth = request.form.get('date_of_birth')
+        email = request.form.get('email')
+        # userDAO.updateUser(id, first_name, last_name, username, password, date_of_birth, email)
+        print(id, first_name, last_name, username, password, date_of_birth, email)
+        print("update")
+        return redirect('/')
+    else:
+        #u = userDAO.findUserById(id)
+        # first_name = u.getFirst_Name()
+        # last_name = u.getLast_name()
+        # username = u.getUsername()
+        # password = u.getPassword()
+        # date_of_birth = u.getDate_Of_Birth()
+        # email = u.getEmail()
+        #return render_template('user_edit.html', id = id, first_name=first_name, last_name=last_name, username=username, password=password, date_of_birth=date_of_birth, email=email)
+        return render_template('user_edit.html', id=id)
+
 
 
 @app.route('/create/aircraft/<id>', methods=['POST','GET'])
 def update_aircraft(id):
-    if not id:
-        return render_template('aircraft_edit.html')
-    elif id:
-        #get all the information about the id#
-        return render_template('aircraft_edit.html', id = "2")
+    if request.method == "POST":
+
+        a_class = request.form.get('a_class')
+        type = request.form.get('type')
+        identification = request.form.get('identification')
+        category = request.form.get('category')
+        #aircraftDAO.updateAircraft(id, a_class, type, identification, category)
+        print(id, a_class, type, identification, category)
+        print("update")
+        return redirect('/')
+    else:
+        # #ac = aircraftDAO.findAircraftById(id)
+        # a_class = ac.getClass()
+        # a_type = ac.getType()
+        # identification = ac.getIdentification()
+        # category = ac.getCategory
+        # return render_template('aircraft_edit.html', a_class = a_class, type = a_type, identification = identification, category = category)
+        return render_template('aircraft_edit.html', id = id)
 
 @app.route('/create/log/<id>', methods=['POST','GET'])
 def update_log(id):
-    if not id:
-        return render_template('log_edit.html')
-    elif id:
-        #get all the information about the id#
-        return render_template('log_edit.html', id = "3")
-
+    if request.method == "POST":
+        sic_time = request.form.get('sic_time')
+        total_time = request.form.get('total_time')
+        pic_time = request.form.get('pic_time')
+        night_time = request.form.get('night_time')
+        day_time = request.form.get('day_time')
+        xc_time = request.form.get('xc_time')
+        dual_received = request.form.get('dual_received')
+        dual_given = request.form.get('dual_given')
+        actual_instrument = request.form.get('actual_instrument')
+        simulated_instrument = request.form.get('simulated_instrument')
+        departure = request.form.get('departure')
+        destination = request.form.get('destination')
+        via = request.form.get('via')
+        day_landings = request.form.get('day_landings')
+        night_landings = request.form.get('night_landings')
+        num_instrument_approaches = request.form.get('num_instrument_approaches')
+        user_id = request.form.get('user_id')
+        aircraft_id = request.form.get('aircraft_id')
+        remarks = request.form.get('remarks')
+        date = request.form.get('date')
+        #logDAO.updateLog(id, sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received,
+        # dual_given, actual_instrument, simulated_instrument, departure, destination, via, day_landings,
+        # night_landings, num_instrument_approaches, user_id, aircraft_id, remarks, date)
+        print("update")
+        print(id, sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received, dual_given,
+              actual_instrument, simulated_instrument, departure, destination, via, day_landings, night_landings,
+              num_instrument_approaches, user_id, aircraft_id, remarks, date)
+        return redirect('/')
+    else:
+        # lg = logDAO.findLogById(id)
+        # sic_time = lg.getsic_time()
+        # total_time = lg.gettotal_time()
+        # pic_time = lg.getpic_time()
+        # night_time = lg.getnight_time()
+        # day_time = lg.getday_time()
+        # xc_time = lg.getxc_time()
+        # dual_received = lg.getdual_received()
+        # dual_given = lg.getdual_given()
+        # actual_instrument = lg.getactual_instrument()
+        # simulated_instrument = lg.getsimulated_instrument()
+        # departure = lg.getdeparture()
+        # destination = lg.getdestination()
+        # via = lg.getvia()
+        # day_landings = lg.getday_landings()
+        # night_landings = lg.getnight_landings()
+        # num_instrument_approaches = lg.getnum_instrument_approaches()
+        # user_id = lg.getuser_id()
+        # aircraft_id = lg.getaircraft_id()
+        # remarks = lg.getRemarks()
+        # date = lg.getDate()
+        # return render_template('log_edit.html', id = id, sic_time = sic_time, total_time = total_time,
+        # pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time,
+        # dual_received = dual_received, dual_given = dual_given, actual_instrument = actual_instrument,
+        # simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via,
+        # day_landings = day_landings,night_landings = night_landings,
+        # num_instrument_approaches = num_instrument_approaches, remarks = remarks, date = date
+        # user_id = user_id, aircraft_id = aircraft_id)
+        return render_template('log_edit.html', id = id)
 
 
 # CREATING
 
+@app.route('/create/rating', methods = ["POST","GET"])
+def create_rating():
+    if request.method == "POST":
+        certificate = request.form.get('certificate')
+        category = request.form.get('category')
+        r_class = request.form.get('r_class')
+        type = request.form.get('type')
+        instrument = request.form.get('instrument')
+        user_id = request.form.get('user_id')
+        # ratingDAO.createRating(id, certificate, category, r_class, type, instrument, user_id)
+        print('create')
+        print(certificate, category, r_class, type, instrument, user_id)
+        return redirect('/')  # replace
+    else:
+        return render_template('ratings_edit.html')
+
+
 @app.route('/create/log', methods=['POST','GET'])
 def create_log():
-    return render_template('log_edit.html')
+    if request.method == "POST":
+        sic_time = request.form.get('sic_time')
+        total_time = request.form.get('total_time')
+        pic_time = request.form.get('pic_time')
+        night_time = request.form.get('night_time')
+        day_time = request.form.get('day_time')
+        xc_time = request.form.get('xc_time')
+        dual_received = request.form.get('dual_received')
+        dual_given = request.form.get('dual_given')
+        actual_instrument = request.form.get('actual_instrument')
+        simulated_instrument = request.form.get('simulated_instrument')
+        departure = request.form.get('departure')
+        destination = request.form.get('destination')
+        via = request.form.get('via')
+        day_landings = request.form.get('day_landings')
+        night_landings = request.form.get('night_landings')
+        num_instrument_approaches = request.form.get('num_instrument_approaches')
+        user_id = request.form.get('user_id')
+        aircraft_id = request.form.get('aircraft_id')
+        remarks = request.form.get('remarks')
+        date = request.form.get('date')
+        # logDAO.creatLog(sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received, dual_given,
+        # actual_instrument, simulated_instrument, departure, destination, via, day_landings, night_landings,
+        # num_instrument_approaches, user_id, aircraft_id, date, remarks)
+        print(sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received, dual_given,
+              actual_instrument, simulated_instrument, departure, destination, via, day_landings, night_landings,
+              num_instrument_approaches, user_id, aircraft_id, date, remarks)
+        return redirect('/')
+    else:
+        return render_template('log_edit.html')
 
 
 @app.route('/create/aircraft', methods=['POST','GET'])
 def create_aircraft():
-    return render_template('aircraft_edit.html')
+    if request.method == "POST":
+        a_class = request.form.get('a_class')
+        a_type = request.form.get('type')
+        identification = request.form.get('identification')
+        category = request.form.get('category')
+        # aircraftDAO.createAircraft(a_class, a_type, identification, category)
+        print(a_class, a_type, identification, category)
+        return redirect('/')
+    else:
+        return render_template('aircraft_edit.html')
 
 @app.route('/create/user', methods=['POST','GET'])
 def create_user():
-    return render_template('user_edit.html')
+    if request.method == "POST":
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        date_of_birth = request.form.get('date_of_birth')
+        email = request.form.get('email')
+        # userDAO.createUser(first_name, last_name, username, password, date_of_birth, email)
+        print(first_name, last_name, username, password, date_of_birth, email)
+        return redirect('/')
+    else:
+        return render_template('user_edit.html')
 
 
 
+
+#DELETE
+
+@app.route('/delete/rating/<id>', methods = ["POST","GET"])
+def delete_rating(id):
+    #ratingDAO.deleteRating(id)
+    print(id)
+    return redirect('/')
+
+@app.route('/delete/user/<id>', methods = ["POST","GET"])
+def delete_user(id):
+    #userDAO.deleteUser(id)
+    print(id)
+    return redirect('/')
+
+@app.route('/delete/log/<id>', methods = ["POST","GET"])
+def delete_log(id):
+    #logDAO.deleteLog(id)
+    print(id)
+    return redirect('/')
+
+@app.route('/delete/aircraft/<id>', methods = ["POST","GET"])
+def delete_aircraft(id):
+    #aircraftDAO.deleteAircraft(id)
+    print(id)
+    return redirect('/')
 
 # @app.route('/')
 # def hello_world():

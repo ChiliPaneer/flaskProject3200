@@ -7,25 +7,33 @@
 <body>
 
 {% if id is defined %}
-    <form action="/create/aircraft/{{ id }}", method="post">
+    <form action="/create/rating/{{ id }}", method="post">
 {% else %}
-    <form action="/create/aircraft", method="post">
+    <form action="/create/rating", method="post">
 {% endif %}
 
     <label for="id">ID:</label><br>
     <input type="text" id="id" name="id" value="{{ id }}"><br>
 
-    <label for="a_class">Class:</label><br>
-    <input type="text" id="a_class" name="a_class" value="{{ a_class }}"><br>
+    <label for="r_class">Class:</label><br>
+    <input type="text" id="r_class" name="r_class" value="{{ r_class }}"><br>
 
     <label for="type">Type:</label><br>
     <input type="type" id="type" name="type" value="{{ type }}"><br>
 
-    <label for="identification">Identification:</label><br>
-    <input type="text" id="identification" name="identification" value="{{ identification }}"><br>
+    <label for="certificate">Certificate:</label><br>
+    <input type="text" id="certificate" name="certificate" value="{{ certificate }}"><br>
 
     <label for="category">Category:</label><br>
     <input type="text" id="category" name="category" value="{{ category }}"><br>
+
+    <label for="instrument">Instrument:</label><br>
+    <input type="text" id="instrument" name="instrument" value="{{ instrument }}"><br>
+
+    <label for="user_id">User ID Integer:</label><br>
+    <input type="text" id="user_id" name="user_id" value="{{ user_id }}"><br>
+
+
 
     <input type="submit" value = "Submit">
 
@@ -37,6 +45,7 @@
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 <button onclick="window.location.href = '/list/aircraft'" type = "button" name = "aircraftlist">Return to List</button>
+
 
 </body>
 </html>

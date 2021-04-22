@@ -5,7 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/", method="post">
+{% if id is defined %}
+    <form action="/create/user/{{ id }}", method="post">
+{% else %}
+    <form action="/create/user", method="post">
+{% endif %}
 
     <label for="id">ID:</label><br>
     <input type="text" id="id" name="id" value="{{ id }}"><br>
