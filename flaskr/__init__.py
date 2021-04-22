@@ -10,8 +10,8 @@ from flask import Flask, render_template, request, redirect
 from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
 import DAO.users as userDAO
 import DAO.logs as logDAO
+import DAO.ratings as ratingDAO
 # Configuring SQL Alchemy, don't touch
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
@@ -23,35 +23,40 @@ engine = create_engine(
 Session = sessionmaker(bind=engine)
 db.init_app(app)
 
+
 # Web pages routing
-#print(logDAO.findAllLogs())
+
 
 # TESTING
 @app.route('/users/list', methods=['GET', 'POST'])
 def findAll_users():
-    users = userDAO.findAll_users()
+    users = users_dao.findAll_users()
     return render_template('list.html', data=users)
 
 
 
 
 
+
 # LISTING
-@app.route('/', methods = ['POST','GET'])
-def landing():
+@app.route('/', methods=['POST', 'GET'])
+def hello_world():
     return render_template('landing.html')
 
-@app.route('/list/user', methods = ['POST','GET'])
+
+@app.route('/list/user', methods=['POST', 'GET'])
 def users_list():
-    #d = #userDAO.findAllUsers()
-    return render_template('list.html', string = 'user', data = d)
+    users = users_dao.findAllUsers()
+    return render_template('list.html', string='user', data=users)
 
-@app.route('/list/aircraft', methods = ['POST','GET'])
+
+@app.route('/list/aircraft', methods=['POST', 'GET'])
 def aircrafts_list():
-    #d = aircraftDAO.findAllAircrafts()
-    return render_template('list.html', string = 'aircraft',data = d)
+    aircrafts = aircrafts_dao.findAllAircrafts()
+    return render_template('list.html', string='aircraft', data=aircrafts)
 
-@app.route('/list/log', methods = ['POST','GET'])
+
+@app.route('/list/log', methods=['POST', 'GET'])
 def logs_list():
     d = list(logDAO.findAllLogs())
     lst = [list(vars(d[0]).keys())[1:]]
@@ -162,44 +167,45 @@ def update_log(id):
         aircraft_id = request.form.get('aircraft_id')
         remarks = request.form.get('remarks')
         date = request.form.get('date')
-        #logDAO.updateLog(id, sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received,
-        # dual_given, actual_instrument, simulated_instrument, departure, destination, via, day_landings,
-        # night_landings, num_instrument_approaches, user_id, aircraft_id, remarks, date)
+        logDAO.updateLogs(id, sic_time = sic_time, total_time = total_time, pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time, dual_received = dual_received,
+        dual_given = dual_given, actual_instrument = actual_instrument, simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via, day_landings = day_landings,
+        night_landings = night_landings, num_instrument_approaches = num_instrument_approaches, user_id = user_id, aircraft_id = aircraft_id, remarks = remarks, date = date)
         print("update")
         print(id, sic_time, total_time, pic_time, night_time, day_time, xc_time, dual_received, dual_given,
               actual_instrument, simulated_instrument, departure, destination, via, day_landings, night_landings,
               num_instrument_approaches, user_id, aircraft_id, remarks, date)
         return redirect('/')
     else:
-        # lg = logDAO.findLogById(id)
-        # sic_time = lg.getsic_time()
-        # total_time = lg.gettotal_time()
-        # pic_time = lg.getpic_time()
-        # night_time = lg.getnight_time()
-        # day_time = lg.getday_time()
-        # xc_time = lg.getxc_time()
-        # dual_received = lg.getdual_received()
-        # dual_given = lg.getdual_given()
-        # actual_instrument = lg.getactual_instrument()
-        # simulated_instrument = lg.getsimulated_instrument()
-        # departure = lg.getdeparture()
-        # destination = lg.getdestination()
-        # via = lg.getvia()
-        # day_landings = lg.getday_landings()
-        # night_landings = lg.getnight_landings()
-        # num_instrument_approaches = lg.getnum_instrument_approaches()
-        # user_id = lg.getuser_id()
-        # aircraft_id = lg.getaircraft_id()
-        # remarks = lg.getRemarks()
-        # date = lg.getDate()
-        # return render_template('log_edit.html', id = id, sic_time = sic_time, total_time = total_time,
-        # pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time,
-        # dual_received = dual_received, dual_given = dual_given, actual_instrument = actual_instrument,
-        # simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via,
-        # day_landings = day_landings,night_landings = night_landings,
-        # num_instrument_approaches = num_instrument_approaches, remarks = remarks, date = date
-        # user_id = user_id, aircraft_id = aircraft_id)
-        return render_template('log_edit.html', id = id)
+        lg = logDAO.findLogsById(id)
+        print(type(lg))
+        sic_time = lg.sic_time
+        total_time = lg.total_time
+        pic_time = lg.pic_time
+        night_time = lg.night_time
+        day_time = lg.day_time
+        xc_time = lg.xc_time
+        dual_received = lg.dual_received
+        dual_given = lg.dual_given
+        actual_instrument = lg.actual_instrument
+        simulated_instrument = lg.simulated_instrument
+        departure = lg.departure
+        destination = lg.destination
+        via = lg.via
+        day_landings = lg.day_landings
+        night_landings = lg.night_landings
+        num_instrument_approaches = lg.num_instrument_approaches
+        user_id = lg.user_id
+        aircraft_id = lg.aircraft_id
+        remarks = lg.remarks
+        date = lg.date
+        return render_template('log_edit.html', id = id, sic_time = sic_time, total_time = total_time,
+        pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time,
+        dual_received = dual_received, dual_given = dual_given, actual_instrument = actual_instrument,
+        simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via,
+        day_landings = day_landings,night_landings = night_landings,
+        num_instrument_approaches = num_instrument_approaches, remarks = remarks, date = date,
+        user_id = user_id, aircraft_id = aircraft_id)
+        #return render_template('log_edit.html', id = id)
 
 
 # CREATING
@@ -326,9 +332,7 @@ def delete_aircraft(id):
 #     return 'Hello World!' + ans
 
 
-
 if __name__ == '__main__':
     app.run()
-
 
 # https://docs.sqlalchemy.org/en/14/dialects/mysql.html#mysql-data-types
