@@ -1,91 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
 <h1>Log Editor/Creator</h1>
 {% if id is defined %}
-    <form action="/create/log/{{ id }}", method="post">
+  <form action="/create/log/{{ id }}", method="post">
 {% else %}
-    <form action="/create/log", method="post">
+  <form action="/create/log", method="post">
 {% endif %}
 
 
 
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id" value="{{ id }}"><br>
+  <label for="id">ID:</label><br>
+  <input type="number" id="id" name="id" value="{{ id }}"><br>
 
-    <label for ="aircraft_id">Enter Aircraft ID Integer</label><br>
-    <input type = "text" id = "aircraft_id" name = "aircraft_id" values = "{{ aircraft_id }}"><br>
+  <label for ="aircraft_id">Enter Aircraft ID Integer</label><br>
+  <input type = "number" id = "aircraft_id" name = "aircraft_id" values = "{{ aircraft_id }}"><br>
 
-    <label for ="user_id">User ID Integer:</label><br>
-    <input type = "text" id = "user_id" name = "user_id" values = "{{ user_id }}"><br>
+  <label for ="user_id">User ID Integer:</label><br>
+  <input type = "number" id = "user_id" name = "user_id" values = "{{ user_id }}"><br>
 
-    <label for="date">Date:</label><br>
-    <input type="text" id="date" name="date" value="{{ date }}"><br>
+  <label for="date">Date:</label><br>
+  <input type="date" id="date" name="date" value="{{ date }}"><br>
 
-    <label for="departure">Departure:</label><br>
-    <input type="text" id="departure" name="departure" value="{{ departure }}"><br>
+  <label for="departure">Departure:</label><br>
+  <input type="text" id="departure" name="departure" value="{{ departure }}"><br>
 
-    <label for="destination">Destination:</label><br>
-    <input type="type" id="destination" name="destination" value="{{ destination }}"><br>
+  <label for="destination">Destination:</label><br>
+  <input type="text" id="destination" name="destination" value="{{ destination }}"><br>
 
-    <label for="via">Via:</label><br>
-    <input type="text" id="via" name="via" value="{{ via }}"><br>
+  <label for="via">Via:</label><br>
+  <input type="text" id="via" name="via" value="{{ via }}"><br>
 
-    <label for="pic_time">PIC Time:</label><br>
-    <input type="text" id="pic_time" name="pic_time" value="{{ pic_time }}"><br>
+  <label for="pic_time">PIC Time:</label><br>
+  <input type="number" step="0.1" id="pic_time" name="pic_time" value="{{ pic_time }}"><br>
 
-    <label for="sic_time">SIC Time:</label><br>
-    <input type="text" id="sic_time" name="sic_time" value="{{ sic_time }}"><br>
+  <label for="sic_time">SIC Time:</label><br>
+  <input type="number" step="0.1" id="sic_time" name="sic_time" value="{{ sic_time }}"><br>
 
-    <label for="day_time">Day Time:</label><br>
-    <input type="text" id="day_time" name="day_time" value="{{ day_time }}"><br>
+  <label for="day_time">Day Time:</label><br>
+  <input type="number" step="0.1" id="day_time" name="day_time" value="{{ day_time }}"><br>
 
-    <label for="night_time">Night Time:</label><br>
-    <input type="text" id="night_time" name="night_time" value="{{ night_time }}"><br>
+  <label for="night_time">Night Time:</label><br>
+  <input type="number" step="0.1" id="night_time" name="night_time" value="{{ night_time }}"><br>
 
-    <label for="xc_time">XC Time:</label><br>
-    <input type="text" id="xc_time" name="xc_time" value="{{ xc_time }}"><br>
+  <label for="xc_time">XC Time:</label><br>
+  <input type="number" step="0.1" id="xc_time" name="xc_time" value="{{ xc_time }}"><br>
 
-    <label for="dual_received">Dual Received:</label><br>
-    <input type="text" id="dual_received" name="dual_received" value="{{ dual_received }}"><br>
+  <label for="dual_received">Dual Received:</label><br>
+  <input type="number" step="0.1" id="dual_received" name="dual_received" value="{{ dual_received }}"><br>
 
-    <label for="dual_given">Dual Given:</label><br>
-    <input type="text" id="dual_given" name="dual_given" value="{{ dual_given }}"><br>
+  <label for="dual_given">Dual Given:</label><br>
+  <input type="number" step="0.1" id="dual_given" name="dual_given" value="{{ dual_given }}"><br>
 
-    <label for="actual_instrument">Actual Instrument Time:</label><br>
-    <input type="text" id="actual_instrument" name="actual_instrument" value="{{ actual_instrument }}"><br>
+  <label for="actual_instrument">Actual Instrument Time:</label><br>
+  <input type="number" step="0.1" id="actual_instrument" name="actual_instrument" value="{{ actual_instrument }}"><br>
 
-    <label for="simulated_instrument">Simulated Instrument:</label><br>
-    <input type="text" id="simulated_instrument" name="simulated_instrument" value="{{ simulated_instrument }}"><br>
+  <label for="simulated_instrument">Simulated Instrument:</label><br>
+  <input type="number" step="0.1" id="simulated_instrument" name="simulated_instrument" value="{{ simulated_instrument }}"><br>
 
-    <label for="day_landings">Day Landings:</label><br>
-    <input type="text" id="day_landings" name="day_landings" value="{{ day_landings }}"><br>
+  <label for="day_landings">Day Landings:</label><br>
+  <input type="number" id="day_landings" name="day_landings" value="{{ day_landings }}"><br>
 
-    <label for="night_landings">Night Landings:</label><br>
-    <input type="text" id="night_landings" name="night_landings" value="{{ night_landings }}"><br>
+  <label for="night_landings">Night Landings:</label><br>
+  <input type="number" id="night_landings" name="night_landings" value="{{ night_landings }}"><br>
 
-    <label for="num_instrument_approaches">Number of Instrument Approaches:</label><br>
-    <input type="text" id="num_instrument_approaches" name="num_instrument_approaches" value="{{ num_instrument_approaches }}"><br>
+  <label for="num_instrument_approaches">Number of Instrument Approaches:</label><br>
+  <input type="number" id="num_instrument_approaches" name="num_instrument_approaches" value="{{ num_instrument_approaches }}"><br>
 
-    <label for="total_time">Total Time:</label><br>
-    <input type="text" id="total_time" name="total_time" value="{{ total_time }}"><br>
+  <label for="total_time">Total Time:</label><br>
+  <input type="number" step="0.1" id="total_time" name="total_time" value="{{ total_time }}"><br>
 
-    <label for="remarks">Remarks</label><br>
-    <input type="text" id="remarks" name="remarks" value="{{ remarks }}"><br>
-
-
+  <label for="remarks">Remarks</label><br>
+  <input type="text" id="remarks" name="remarks" value="{{ remarks }}"><br>
 
 
-    <input type="submit" value = "Submit">
+
+
+  <input type="submit" value = "Submit">
 
 </form>
 
 {% if id is defined %}
-    <button onclick = "window.location.href= '/delete/log/{{ id }}'" type="button" name = "delete">Delete</button>
+  <button onclick = "window.location.href= '/delete/log/{{ id }}'" type="button" name = "delete">Delete</button>
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 <button onclick="window.location.href = '/list/log'" type = "button" name = "loglist">Return to List</button>
