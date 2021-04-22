@@ -83,6 +83,8 @@ class Logs(db.Model):
     aircraft = relationship("Aircrafts")  # , back_populates="logs")
 
 
+
+
 class Ratings(db.Model):
     __tablename__ = 'ratings'
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)

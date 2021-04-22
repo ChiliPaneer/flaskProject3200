@@ -24,3 +24,5 @@ def deleteLogs(id):
     db.session.delete(obj)
     db.session.commit()
 
+
+
