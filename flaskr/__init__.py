@@ -9,7 +9,9 @@ from models import Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Rating
 from flask import Flask, render_template, request, redirect
 from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
 import DAO.users as userDAO
+import DAO.logs as logDAO
 # Configuring SQL Alchemy, don't touch
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
@@ -22,14 +24,13 @@ Session = sessionmaker(bind=engine)
 db.init_app(app)
 
 # Web pages routing
-
+#print(logDAO.findAllLogs())
 
 # TESTING
 @app.route('/users/list', methods=['GET', 'POST'])
 def findAll_users():
     users = userDAO.findAll_users()
     return render_template('list.html', data=users)
-
 
 
 
@@ -52,8 +53,11 @@ def aircrafts_list():
 
 @app.route('/list/log', methods = ['POST','GET'])
 def logs_list():
-    # d = logDAO.findAllAircrafts()
-    return render_template('list.html', string = 'log', data = d)
+    d = list(logDAO.findAllLogs())
+    lst = [list(vars(d[0]).keys())[1:]]
+    for i in d:
+        lst.append(list(vars(i).values())[1:])
+    return render_template('list.html', string = 'log', data = lst)
 
 @app.route('/list/rating', methods = ["POST",'GET'])
 def ratings_list():
@@ -102,7 +106,7 @@ def update_user(id):
         print("update")
         return redirect('/')
     else:
-        #u = userDAO.findUserById(id)
+        # u = userDAO.findUserById(id)
         # first_name = u.getFirst_Name()
         # last_name = u.getLast_name()
         # username = u.getUsername()
@@ -322,7 +326,9 @@ def delete_aircraft(id):
 #     return 'Hello World!' + ans
 
 
+
 if __name__ == '__main__':
     app.run()
+
 
 # https://docs.sqlalchemy.org/en/14/dialects/mysql.html#mysql-data-types

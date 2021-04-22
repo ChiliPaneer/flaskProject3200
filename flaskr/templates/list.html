@@ -35,16 +35,16 @@
 
 <table style = "width:100%">
     <tr> {# Head of the table #}
-        {% for item in data %}
+        {% for item in data[0] %}
             <th>{{ item }}</th>
         {% endfor %}
     </tr>
 
-
+    {%  set testing =  data[0].index('id') %}
 
     {% for item in data[1:] %} {# goes through each row in the table #}
 
-        <tr onclick="window.location.href='/create/{{ string }}/{{ item[0] }}';">
+        <tr onclick="window.location.href='/create/{{ string }}/{{ item[testing] }}';">
             {% for i in item %}
                 <td>{{ i }}</td> {# Goes through each entry in the row #}
             {% endfor %}
