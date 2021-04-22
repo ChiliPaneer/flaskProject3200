@@ -5,10 +5,13 @@ ADRIAN: Update the route methods to accoutn for posting and passing in
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
+from models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
 from flask import Flask, render_template
-from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
-import DAO.users as userDAO
+
+import DAO.users as users_dao
+import DAO.ratings as ratings_dao
+import DAO.aircrafts as aircrafts_dao
+
 # Configuring SQL Alchemy, don't touch
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
@@ -21,85 +24,85 @@ engine = create_engine(
 Session = sessionmaker(bind=engine)
 db.init_app(app)
 
+
 # Web pages routing
 
 
 # TESTING
 @app.route('/users/list', methods=['GET', 'POST'])
 def findAll_users():
-    users = userDAO.findAll_users()
+    users = users_dao.findAll_users()
     return render_template('list.html', data=users)
 
 
-
-
-
-
 # LISTING
-@app.route('/', methods = ['POST','GET'])
+@app.route('/', methods=['POST', 'GET'])
 def hello_world():
     return render_template('landing.html')
 
-@app.route('/list/user', methods = ['POST','GET'])
+
+@app.route('/list/user', methods=['POST', 'GET'])
 def users_list():
-    #data = #userDAO.findAllUsers()
-    return render_template('list.html', string = 'user', data = [[0,1],[0,1]])
+    users = users_dao.findAllUsers()
+    return render_template('list.html', string='user', data=users)
 
-@app.route('/list/aircraft', methods = ['POST','GET'])
+
+@app.route('/list/aircraft', methods=['POST', 'GET'])
 def aircrafts_list():
-    return render_template('list.html', string = 'aircraft',data = [[0,1],[0,1]])
+    aircrafts = aircrafts_dao.findAllAircrafts()
+    return render_template('list.html', string='aircraft', data=aircrafts)
 
-@app.route('/list/log', methods = ['POST','GET'])
+
+@app.route('/list/log', methods=['POST', 'GET'])
 def logs_list():
-    return render_template('list.html', string = 'log', data = [[0,1],[0,1]])
+    return render_template('list.html', string='log', data=[[0, 1], [0, 1]])
 
 
 # UPDATING
-@app.route('/create/user/<id>', methods=['POST','GET'])
+@app.route('/create/user/<id>', methods=['POST', 'GET'])
 def update_user(id):
     # if post:
     #     userDAO.creatUser(requests.form['key'],...)
     if not id:
         return render_template('user_edit.html')
     elif id:
-        #get all the information about the id#
-        return render_template('user_edit.html', id = "4")
+        # get all the information about the id#
+        return render_template('user_edit.html', id="4")
 
 
-@app.route('/create/aircraft/<id>', methods=['POST','GET'])
+@app.route('/create/aircraft/<id>', methods=['POST', 'GET'])
 def update_aircraft(id):
     if not id:
         return render_template('aircraft_edit.html')
     elif id:
-        #get all the information about the id#
-        return render_template('aircraft_edit.html', id = "2")
+        # get all the information about the id#
+        return render_template('aircraft_edit.html', id="2")
 
-@app.route('/create/log/<id>', methods=['POST','GET'])
+
+@app.route('/create/log/<id>', methods=['POST', 'GET'])
 def update_log(id):
     if not id:
         return render_template('log_edit.html')
     elif id:
-        #get all the information about the id#
-        return render_template('log_edit.html', id = "3")
-
+        # get all the information about the id#
+        return render_template('log_edit.html', id="3")
 
 
 # CREATING
 
-@app.route('/create/log', methods=['POST','GET'])
+@app.route('/create/log', methods=['POST', 'GET'])
 def create_log():
     return render_template('log_edit.html')
 
 
-@app.route('/create/aircraft', methods=['POST','GET'])
+@app.route('/create/aircraft', methods=['POST', 'GET'])
 def create_aircraft():
     return render_template('aircraft_edit.html')
 
-@app.route('/create/user', methods=['POST','GET'])
+
+@app.route('/create/user', methods=['POST', 'GET'])
 def create_user():
     return render_template('user_edit.html')
-
-
 
 
 # @app.route('/')
