@@ -267,9 +267,8 @@ def create_log():
         num_instrument_approaches = request.form.get('num_instrument_approaches')
         user_id = request.form.get('user_id')
         aircraft_id = request.form.get('aircraft_id')
-        date = request.form.get('date')
-        date = datetime.strptime(date,"%Y-%m-%d")
         remarks = request.form.get('remarks')
+        date = datetime.strptime(request.form.get('date'), '%Y-%m-%d')
         logDAO.createLog(sic_time = sic_time, total_time = total_time, pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time, dual_received = dual_received,
         dual_given = dual_given, actual_instrument = actual_instrument, simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via, day_landings = day_landings,
         night_landings = night_landings, num_instrument_approaches = num_instrument_approaches, user_id = user_id, aircraft_id = aircraft_id, remarks = remarks, date = date)
