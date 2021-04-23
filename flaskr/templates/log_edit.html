@@ -24,7 +24,7 @@
   <input type = "number" id = "user_id" name = "user_id" values = "{{ user_id }}"><br>
 
   <label for="date">Date:</label><br>
-  <input type="date" id="date" name="date" value="{{ date }}"><br>
+  <input type="date" id="date" name="date" value="{{datetime.strptime(date, '%Y-%m-%d')}}"><br>
 
   <label for="departure">Departure:</label><br>
   <input type="text" id="departure" name="departure" value="{{ departure }}"><br>
