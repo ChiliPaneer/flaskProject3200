@@ -5,9 +5,9 @@ ADRIAN: implement rest of DAOs
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
-from flask import Flask, render_template, request, redirect, flash
-from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
+from models import Logs, Users, Aircrafts, Categories, Certificates, Ratings
+from flask import Flask, render_template, request, redirect
+from flaskr.models import db, Logs, Users, Aircrafts, Ratings
 import DAO.users as userDAO
 import DAO.logs as logDAO
 import DAO.ratings as ratingDAO
