@@ -11,6 +11,7 @@ from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateE
 import DAO.users as userDAO
 import DAO.logs as logDAO
 import DAO.ratings as ratingDAO
+import DAO.aircrafts as aircraftDAO
 from datetime import datetime
 # Configuring SQL Alchemy, don't touch
 app = Flask(__name__)
@@ -31,7 +32,7 @@ db.init_app(app)
 # TESTING
 @app.route('/users/list', methods=['GET', 'POST'])
 def findAll_users():
-    users = users_dao.findAll_users()
+    users = userDAO.findAll_users()
     return render_template('list.html', data=users)
 
 
@@ -47,13 +48,13 @@ def hello_world():
 
 @app.route('/list/user', methods=['POST', 'GET'])
 def users_list():
-    users = users_dao.findAllUsers()
+    users = userDAO.findAllUsers()
     return render_template('list.html', string='user', data=users)
 
 
 @app.route('/list/aircraft', methods=['POST', 'GET'])
 def aircrafts_list():
-    aircrafts = aircrafts_dao.findAllAircrafts()
+    aircrafts = aircraftDAO.findAllAircrafts()
     return render_template('list.html', string='aircraft', data=aircrafts)
 
 
@@ -318,6 +319,18 @@ def delete_aircraft(id):
     #aircraftDAO.deleteAircraft(id)
     print(id)
     return redirect('/')
+
+
+
+@app.errorhandler(Exception)
+def handlerException(e):
+    return render_template('error_page.html', error = e)
+
+@app.route('/error')
+def referral():
+    return request.referrer
+
+
 
 # @app.route('/')
 # def hello_world():
