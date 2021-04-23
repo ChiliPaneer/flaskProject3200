@@ -96,7 +96,7 @@ class Ratings(db.Model):
     created = Column(DATETIME, default=datetime.datetime.now)
     updated = Column(DATETIME, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users.id', onupdate='cascade', ondelete='cascade'))
 
 
     # change to ratings_to_users in database

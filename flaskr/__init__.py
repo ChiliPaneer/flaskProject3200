@@ -6,7 +6,7 @@ ADRIAN: implement rest of DAOs
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
 import DAO.users as userDAO
 import DAO.logs as logDAO
@@ -50,40 +50,48 @@ def hello_world():
 
 @app.route('/list/user', methods=['POST', 'GET'])
 def users_list():
-    d = list(userDAO.findAllUsers())
-    lst = [list(vars(d[0]).keys())[1:]]
-    for i in d:
-        lst.append(list(vars(i).values())[1:])
-    print(lst)
-    return render_template('list.html', string='user', data=lst)
-
+    try:
+        d = list(userDAO.findAllUsers())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        print(lst)
+        return render_template('list.html', string='user', data=lst)
+    except IndexError:
+        return redirect('/create/user')
 
 @app.route('/list/aircraft', methods=['POST', 'GET'])
 def aircrafts_list():
-    d = list(aircraftDAO.findAllAircrafts())
-    lst = [list(vars(d[0]).keys())[1:]]
-    for i in d:
-        lst.append(list(vars(i).values())[1:])
-    print(lst)
-    return render_template('list.html', string='aircraft', data=lst)
-
+    try:
+        d = list(aircraftDAO.findAllAircrafts())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        print(lst)
+        return render_template('list.html', string='aircraft', data=lst)
+    except IndexError:
+        return redirect('/create/aircraft')
 
 @app.route('/list/log', methods=['POST', 'GET'])
 def logs_list():
-    d = list(logDAO.findAllLogs())
-    lst = [list(vars(d[0]).keys())[1:]]
-    for i in d:
-        lst.append(list(vars(i).values())[1:])
-    return render_template('list.html', string = 'log', data = lst)
-
+    try:
+        d = list(logDAO.findAllLogs())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'log', data = lst)
+    except IndexError:
+        return redirect('/create/log')
 @app.route('/list/rating', methods = ["POST",'GET'])
 def ratings_list():
-    d = list(ratingDAO.findAllRatings())
-    lst = [list(vars(d[0]).keys())[1:]]
-    for i in d:
-        lst.append(list(vars(i).values())[1:])
-    return render_template('list.html', string = 'rating', data = lst)
-
+    try:
+        d = list(ratingDAO.findAllRatings())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'rating', data = lst)
+    except IndexError:
+        return redirect('/create/rating')
 
 # UPDATING
 @app.route('/create/rating/<id>', methods = ['POST','GET'])
@@ -133,7 +141,7 @@ def update_user(id):
         last_name = u.last_name
         username = u.username
         password = u.password
-        date_of_birth = u.date_of_birth
+        date_of_birth = datetime.strftime(u.date_of_birth, '%Y-%m-%d')
         email = u.email
         return render_template('user_edit.html', id = id, first_name=first_name, last_name=last_name, username=username, password=password, date_of_birth=date_of_birth, email=email)
         #return render_template('user_edit.html', id=id)
@@ -308,7 +316,8 @@ def create_user():
         print(first_name, last_name, username, password, date_of_birth, email)
         return redirect('/')
     else:
-        return render_template('user_edit.html')
+        now = datetime.now()
+        return render_template('user_edit.html', date_of_birth = datetime.strftime(now, '%Y-%m-%d'))
 
 
 
