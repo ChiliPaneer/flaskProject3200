@@ -3,36 +3,57 @@ from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateE
 
 
 def createLog(**kwargs):
-    newLog = Logs(
-        sic_time = kwargs.get('sic_time'),
-        total_time=kwargs.get('total_time'),
-        pic_time=kwargs.get('pic_time'),
-        date=kwargs.get('date'),
-        night_time=kwargs.get('night_time'),
-        day_time=kwargs.get('day_time'),
-        xc_time=kwargs.get('xc_time'),
-        dual_received=kwargs.get('dual_received'),
-        dual_given=kwargs.get('dual_given'),
-        actual_instrument=kwargs.get('actual_instrument'),
-        simulated_instrument=kwargs.get('simulated_instrument'),
-        departure=kwargs.get('departure'),
-        destination=kwargs.get('destination'),
-        via=kwargs.get('via'),
-        day_landings=kwargs.get('day_landings'),
-        night_landings=kwargs.get('night_landings'),
-        num_instrument_approaches=kwargs.get('num_instrument_approaches'),
-        remarks=kwargs.get('remarks'),
-        user_id=kwargs.get('user_id'),
-        aircraft_id=kwargs.get('aircraft_id'),
-        created=kwargs.get('created'),
-        updated=kwargs.get('updated')
-    )
+    newLog = Logs()
+    if kwargs.get('sic_time'):
+       newLog.sic_time = kwargs.get('sic_time')
+    if kwargs.get('total_time'):
+        newLog.total_time = kwargs.get('total_time')
+    if kwargs.get('pic_time'):
+        dbnewLog.get('pic_time')
+    if kwargs.get('date'):
+        newLog.date = kwargs.get('date')
+    if kwargs.get('night_time'):
+        newLog.night_time = kwargs.get('night_time')
+    if kwargs.get('day_time'):
+        newLog.day_time = kwargs.get('day_time')
+    if kwargs.get('xc_time'):
+        newLog.xc_time = kwargs.get('xc_time')
+    if kwargs.get('dual_received'):
+        newLog.dual_received = kwargs.get('dual_received')
+    if kwargs.get('dual_given'):
+        newLog.dual_given = kwargs.get('dual_given')
+    if kwargs.get('actual_instrument'):
+        newLog.actual_instrument = kwargs.get('actual_instrument')
+    if kwargs.get('simulated_instrument'):
+        newLog.simulated_instrument = kwargs.get('simulated_instrument')
+    if kwargs.get('departure'):
+        newLog.departure = kwargs.get('departure')
+    if kwargs.get('destination'):
+        newLog.destination = kwargs.get('destination')
+    if kwargs.get('via'):
+        newLog.via = kwargs.get('via')
+    if kwargs.get('day_landings'):
+        newLog.day_landings = kwargs.get('day_landings')
+    if kwargs.get('night_landings'):
+        newLog.night_landings = kwargs.get('night_landings')
+    if kwargs.get('num_instrument_approaches'):
+        newLog.num_instrument_approaches = kwargs.get('num_instrument_approaches')
+    if kwargs.get('remarks'):
+        newLog.remarks = kwargs.get('remarks')
+    if kwargs.get('user_id'):
+        newLog.user_id = kwargs.get('user_id')
+    if kwargs.get('aircraft_id'):
+        newLog.aircraft_id = kwargs.get('aircraft_id')
+    if kwargs.get('created'):
+        newLog.created = kwargs.get('created')
+    if kwargs.get('updated'):
+        newLog.updated = kwargs.get('updated')
+
     db.session.add(newLog)
     db.session.commit()
 
 
 def updateLogs(id, **kwargs):
-    
     if kwargs.get('sic_time'):
         db.session.query(Logs).get(id).sic_time = kwargs.get('sic_time')
     if kwargs.get('total_time'):
