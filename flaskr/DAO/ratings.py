@@ -7,7 +7,7 @@ from datetime import datetime as dt
 
 # attribution: Todd Birchard @hackersandslackers.com
 
-def createRatings(airClass, type, certificate, category, instrument, user_id):
+def createRating(certificate, category, airClass, type, instrument, user_id):
 
     new_ratings = Ratings(
         airClass=airClass,
@@ -28,12 +28,12 @@ def findAllRatings():
     return ratings
 
 
-def findByIDRatings(id):
+def findRatingById(id):
     rating = db.session.query(Ratings).get(id)
     return rating
 
 
-def updateRatings(id, certificate, category, airClass, type, instrument, user_id):
+def updateRating(id, certificate, category, airClass, type, instrument, user_id):
     # which rating is being updated
     rating = db.session.query(Ratings).get(id)
 
@@ -54,7 +54,7 @@ def updateRatings(id, certificate, category, airClass, type, instrument, user_id
     db.session.commit()
 
 
-def deleteRatings(id):
+def deleteRating(id):
     obj = db.session.query(Ratings).filter(Ratings.id == id).first()
     db.session.delete(obj)
     db.session.commit()

@@ -78,8 +78,11 @@ def logs_list():
 
 @app.route('/list/rating', methods = ["POST",'GET'])
 def ratings_list():
-    #d = ratingDAO.findAllRatings()
-    return render_template('list.html', string = 'rating', data = d)
+    d = list(ratingDAO.findAllRatings())
+    lst = [list(vars(d[0]).keys())[1:]]
+    for i in d:
+        lst.append(list(vars(i).values())[1:])
+    return render_template('list.html', string = 'rating', data = lst)
 
 
 # UPDATING
@@ -92,21 +95,21 @@ def update_rating(id):
         type = request.form.get('type')
         instrument = request.form.get('instrument')
         user_id = request.form.get('user_id')
-        #ratingDAO.updateRating(id, certificate, category, r_class, type, instrument, user_id)
+        ratingDAO.updateRating(id, certificate, category, r_class, type, instrument, user_id)
         print(id, certificate, category, r_class, type, instrument, user_id)
         print("update")
         return redirect('/') #replace
     else:
-        # r = ratingDAO.findRatingById(id)
-        # certificate = r.getCertificate()
-        # category = r.getCategory()
-        # r_class = r.getClass()
-        # type = r.getType()
-        # instrument = r.getInstrument
-        # user_id = r.getUser_id
-        # return render_template('ratings_edit.html', certificate = certificate, category = category, r_class = r_class,
-        #                       type = type, instrument = instrument, user_id = user_id)
-        return render_template('ratings_edit.html', id = id)
+        r = ratingDAO.findRatingById(id)
+        certificate = r.certificate
+        category = r.category
+        r_class = r.airClass
+        type = r.type
+        instrument = r.instrument
+        user_id = r.user_id
+        return render_template('ratings_edit.html', id = id, certificate = certificate, category = category, r_class = r_class,
+                              type = type, instrument = instrument, user_id = user_id)
+        #return render_template('ratings_edit.html', id = id)
 
 
 @app.route('/create/user/<id>', methods=['POST','GET'])
@@ -235,7 +238,7 @@ def create_rating():
         type = request.form.get('type')
         instrument = request.form.get('instrument')
         user_id = request.form.get('user_id')
-        # ratingDAO.createRating(id, certificate, category, r_class, type, instrument, user_id)
+        ratingDAO.createRating(certificate, category, r_class, type, instrument, user_id)
         print('create')
         print(certificate, category, r_class, type, instrument, user_id)
         return redirect('/')  # replace
@@ -264,8 +267,9 @@ def create_log():
         num_instrument_approaches = request.form.get('num_instrument_approaches')
         user_id = request.form.get('user_id')
         aircraft_id = request.form.get('aircraft_id')
+        date = request.form.get('date')
+        date = datetime.strptime(date,"%Y-%m-%d")
         remarks = request.form.get('remarks')
-        date = datetime.strptime(request.form.get('date'), '%dd/%mm/%yyyy')
         logDAO.createLog(sic_time = sic_time, total_time = total_time, pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time, dual_received = dual_received,
         dual_given = dual_given, actual_instrument = actual_instrument, simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via, day_landings = day_landings,
         night_landings = night_landings, num_instrument_approaches = num_instrument_approaches, user_id = user_id, aircraft_id = aircraft_id, remarks = remarks, date = date)
@@ -313,7 +317,7 @@ def create_user():
 
 @app.route('/delete/rating/<id>', methods = ["POST","GET"])
 def delete_rating(id):
-    #ratingDAO.deleteRating(id)
+    ratingDAO.deleteRating(id)
     print(id)
     return redirect('/')
 
