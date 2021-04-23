@@ -1,6 +1,6 @@
 '''
-ADRIAN: Update the route methods to accoutn for posting and passing in
-        parameters into imaginary dao methods (a lot of code will be stolen from DAO/<file>.py
+ADRIAN: implement rest of DAOs
+
 '''
 
 from sqlalchemy import create_engine
