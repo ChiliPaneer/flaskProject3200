@@ -7,7 +7,7 @@ from datetime import datetime as dt
 
 # attribution: Todd Birchard @hackersandslackers.com
 
-def createAircrafts(airClass, type, identification, category):
+def createAircraft(airClass, type, identification, category):
     new_aircrafts = Aircrafts(
         # TODO a_class rep. class with is a keyword in python, possible conflict?
         airClass=airClass,
@@ -25,12 +25,12 @@ def findAllAircrafts():
     aircrafts = db.session.query(Aircrafts).all()
     return aircrafts
 
-def findByIDAircrafts(id):
+def findAircraftById(id):
     aircraft = db.session.query(Aircrafts).get(id)
     return aircraft
 
 
-def updateAircrafts(id, airClass, type, identification, category):
+def updateAircraft(id, airClass, type, identification, category):
     # which aircraft is being updated
     aircraft = db.session.query(Aircrafts).get(id)
     # get updated fields
@@ -46,7 +46,7 @@ def updateAircrafts(id, airClass, type, identification, category):
     db.session.commit()
 
 
-def deleteAircrafts(id):
+def deleteAircraft(id):
     obj = db.session.query(Aircrafts).filter(Aircrafts.id == id).first()
     db.session.delete(obj)
     db.session.commit()

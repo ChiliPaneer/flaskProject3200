@@ -13,25 +13,41 @@
 {% endif %}
 
     <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id" value="{{ id }}"><br>
+    <input type="number" id="id" name="id" value="{{ id }}"><br>
 
     <label for="r_class">Class:</label><br>
     <input type="text" id="r_class" name="r_class" value="{{ r_class }}"><br>
 
     <label for="type">Type:</label><br>
-    <input type="type" id="type" name="type" value="{{ type }}"><br>
+    <input type="text" id="type" name="type" value="{{ type }}"><br>
 
     <label for="certificate">Certificate:</label><br>
-    <input type="text" id="certificate" name="certificate" value="{{ certificate }}"><br>
+    <select id="certificate" name="certificate" value="{{ certificate }}" type="text">
+        <option value="student">student</option>
+        <option value="sport">sport</option>
+        <option value="recreational">recreational</option>
+        <option value="private">private</option>
+        <option value="commercial">commercial</option>
+        <option value="airline transport">airline transport</option>
+    </select>
+
 
     <label for="category">Category:</label><br>
-    <input type="text" id="category" name="category" value="{{ category }}"><br>
+    <select id="category" name="category" value="{{ category }}" type="text">
+        <option value="airplane">airplane</option>
+        <option value="rotorcraft">rotorcraft</option>
+        <option value="glider">glider</option>
+        <option value="powered parachute">powered parachute</option>
+        <option value="lighter than air">lighter than air</option>
+        <option value="powered lift">powered lift</option>
+        <option value="weight shift control">weight shift control</option>
+    </select>
 
     <label for="instrument">Instrument:</label><br>
     <input type="text" id="instrument" name="instrument" value="{{ instrument }}"><br>
 
     <label for="user_id">User ID Integer:</label><br>
-    <input type="text" id="user_id" name="user_id" value="{{ user_id }}"><br>
+    <input type="number" id="user_id" name="user_id" value="{{ user_id }}"><br>
 
 
 

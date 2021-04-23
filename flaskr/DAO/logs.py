@@ -90,7 +90,7 @@ def findAllLogs():
     return obj
 
 
-def deleteLogs(id):
+def deleteLog(id):
     obj = db.session.query.get(id)
     db.session.delete(obj)
     db.session.commit()

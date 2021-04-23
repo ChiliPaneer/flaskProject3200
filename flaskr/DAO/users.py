@@ -8,7 +8,7 @@ from datetime import datetime as dt
 
 # attribution: Todd Birchard @hackersandslackers.com
 
-def createUsers(first_name, last_name, username, password, date_of_birth, email):
+def createUser(first_name, last_name, username, password, date_of_birth, email):
     render_template('user_edit.html')
     """Create a user via query string parameters."""
     new_user = Users(
@@ -26,7 +26,7 @@ def createUsers(first_name, last_name, username, password, date_of_birth, email)
     db.session.commit()  # Commits all changes
 
 
-def findByIDUsers(id):
+def findUserById(id):
     user = db.session.query(Users).get(id)
     return user
 
@@ -37,7 +37,7 @@ def findAllUsers():
     # return render_template('list.html', users)
 
 
-def updateUsers(id, first_name, last_name, username, password, date_of_birth, email):
+def updateUser(id, first_name, last_name, username, password, date_of_birth, email):
     # which user is being updated
     user = db.session.query(Users).get(id)
 
@@ -58,7 +58,7 @@ def updateUsers(id, first_name, last_name, username, password, date_of_birth, em
     db.session.commit()
 
 
-def deleteUsers(id):
+def deleteUser(id):
     obj = db.session.query(Users).filter(Users.id == id).first()
     db.session.delete(obj)
     db.session.commit()
