@@ -22,24 +22,13 @@ class Users(db.Model):
     email = Column(String(45), default="ex@mail.com")
 
 
-class CategoryEnum(enum.Enum):
-    airplane = 'airplane'
-    rotorcraft = 'rotorcraft'
-    glider = 'glider'
-    poweredPara = 'powered parachute'
-    lighter = 'lighter than air'
-    poweredLift = 'powered lift'
-    weightShift = 'weight shift control'
+class Categories(db.Model):
+    __tablename__ = 'categories'
+    category = Column(String(45), primary_key=True)
 
-
-class CertificateEnum(enum.Enum):
-    student = 'student'
-    sport = 'sport'
-    recreational = 'recreational'
-    private = 'private'
-    commercial = 'commercial'
-    airlineTransport = 'airline transport'
-
+class Certificates(db.Model):
+    __tablename__ = 'certificates'
+    certificate = Column(String(45), primary_key=True)
 
 class Aircrafts(db.Model):
     __tablename__ = 'aircrafts'
@@ -47,9 +36,11 @@ class Aircrafts(db.Model):
     airClass = Column('class', String(45))
     type = Column(String(45))
     identification = Column(String(45))
-    category = Column(Enum(CategoryEnum))
+    category = Column(String(45), ForeignKey('categories.category'))
     created = Column(DATETIME, default=datetime.datetime.now)
     updated = Column(DATETIME, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+
+    categories_to_aircrafts = relationship("Categories")
 
 
 class Logs(db.Model):
@@ -88,15 +79,17 @@ class Logs(db.Model):
 class Ratings(db.Model):
     __tablename__ = 'ratings'
     id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    certificate = Column(Enum(CertificateEnum))
-    category = Column(Enum(CategoryEnum))
     airClass = Column('class', String(100))
     type = Column(String(200))
     instrument = Column(String(45))
+    category = Column(String(45), ForeignKey('categories.category'))
+    certificate = Column(String(45), ForeignKey('certificates.certificate'))
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='cascade'))
     created = Column(DATETIME, default=datetime.datetime.now)
     updated = Column(DATETIME, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
-    user_id = Column(Integer, ForeignKey('users.id'))
+    categories_to_ratings = relationship("Categories")
+    certificates_to_ratings = relationship("Certificates")
 
 
     # change to ratings_to_users in database

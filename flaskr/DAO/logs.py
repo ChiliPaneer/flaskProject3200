@@ -1,5 +1,5 @@
 # TODO REFACTOR AS DISCUSSED VENKAT
-from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
+from flaskr.models import db, Logs, Users, Aircrafts,  Ratings
 
 
 def createLog(**kwargs):
