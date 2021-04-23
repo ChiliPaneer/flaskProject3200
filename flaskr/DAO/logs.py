@@ -82,8 +82,13 @@ def updateLogs(id, **kwargs):
 
 def findLogsById(id):
     obj = db.session.query(Logs).get(id)
+    print(obj)
+    print(vars(obj))
     return obj
 
+def findLogsByUserId(id):
+    obj = db.session.query(Logs).filter('user_id' == id)
+    return obj
 
 def findAllLogs():
     obj = db.session.query(Logs).all()
