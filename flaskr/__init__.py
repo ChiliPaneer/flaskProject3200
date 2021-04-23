@@ -216,7 +216,7 @@ def update_log(id):
         user_id = lg.user_id
         aircraft_id = lg.aircraft_id
         remarks = lg.remarks
-        date = lg.date
+        date = datetime.strftime(lg.date, '%Y-%m-%d')
         return render_template('log_edit.html', id = id, sic_time = sic_time, total_time = total_time,
         pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time,
         dual_received = dual_received, dual_given = dual_given, actual_instrument = actual_instrument,
@@ -277,7 +277,8 @@ def create_log():
               num_instrument_approaches, user_id, aircraft_id, date, remarks)
         return redirect('/')
     else:
-        return render_template('log_edit.html')
+        now = datetime.now()
+        return render_template('log_edit.html', date = datetime.strftime(now,'%Y-%m-%d'))
 
 
 @app.route('/create/aircraft', methods=['POST','GET'])

@@ -9,7 +9,7 @@ def createLog(**kwargs):
     if kwargs.get('total_time'):
         newLog.total_time = kwargs.get('total_time')
     if kwargs.get('pic_time'):
-        dbnewLog.get('pic_time')
+        newLog.get('pic_time')
     if kwargs.get('date'):
         newLog.date = kwargs.get('date')
     if kwargs.get('night_time'):
