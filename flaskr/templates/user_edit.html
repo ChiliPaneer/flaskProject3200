@@ -11,8 +11,9 @@
     <form action="/create/user", method="post">
 {% endif %}
 
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id" value="{{ id }}"><br>
+{% if id is defined %}
+    <h2>User ID: {{ id }}</h2>
+{% endif %}
 
     <label for="first_name">First name:</label><br>
     <input type="text" id="first_name" name="first_name" value="{{ first_name }}"><br>
@@ -38,7 +39,9 @@
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 <button onclick="window.location.href = '/list/user'" type = "button" name = "userlist">Return to List</button>
-
+{% if id is defined %}
+    <button onclick = "window.location.href= '/list/log/{{ id }}'" type="button" name = "User List">View User's Logs</button>
+{% endif %}
 
 </body>
 </html>

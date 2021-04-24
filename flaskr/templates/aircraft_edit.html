@@ -12,8 +12,10 @@
     <form action="/create/aircraft", method="post">
 {% endif %}
 
-    <label for="id">ID:</label><br>
-    <input type="number" id="id" name="id" value="{{ id }}"><br>
+{% if id is defined %}
+    <h2>Aircraft ID: {{ id }}</h2>
+{% endif %}
+
 
     <label for="a_class">Class:</label><br>
     <input type="text" id="a_class" name="a_class" value="{{ a_class }}"><br>
@@ -24,8 +26,10 @@
     <label for="identification">Identification:</label><br>
     <input type="text" id="identification" name="identification" value="{{ identification }}"><br>
 
+
     <label for="category">Category:</label><br>
     <select id="category" name="category" value="{{ category }}" type="text">
+        <option selected hidden>{{ category }}</option>
         <option value="airplane">airplane</option>
         <option value="rotorcraft">rotorcraft</option>
         <option value="glider">glider</option>

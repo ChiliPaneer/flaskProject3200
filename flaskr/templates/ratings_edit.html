@@ -12,8 +12,10 @@
     <form action="/create/rating", method="post">
 {% endif %}
 
-    <label for="id">ID:</label><br>
-    <input type="number" id="id" name="id" value="{{ id }}"><br>
+{% if id is defined %}
+    <h2>Rating ID: {{ id }}</h2>
+{% endif %}
+
 
     <label for="r_class">Class:</label><br>
     <input type="text" id="r_class" name="r_class" value="{{ r_class }}"><br>
@@ -23,6 +25,7 @@
 
     <label for="certificate">Certificate:</label><br>
     <select id="certificate" name="certificate" value="{{ certificate }}" type="text">
+        <option selected hidden>{{ certificate }}</option>
         <option value="student">student</option>
         <option value="sport">sport</option>
         <option value="recreational">recreational</option>
@@ -34,6 +37,7 @@
 
     <label for="category">Category:</label><br>
     <select id="category" name="category"  type="text">
+        <option selected hidden>{{ category }}</option>
         <option value="airplane">airplane</option>
         <option value="rotorcraft">rotorcraft</option>
         <option value="glider">glider</option>
@@ -62,6 +66,9 @@
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 <button onclick="window.location.href = '/list/rating'" type = "button" name = "aircraftlist">Return to List</button>
+{% if id is defined %}
+    <button onclick = "window.location.href= '/create/user/{{ user_id }}'" type="button" name = "delete">Update User</button>
+{% endif %}
 
 
 </body>
