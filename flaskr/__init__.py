@@ -388,6 +388,19 @@ def delete_aircraft(id):
     print(id)
     return redirect('/')
 
+
+
+@app.errorhandler(Exception)
+def handlerException(e):
+    print(e)
+    return render_template('error_page.html', error = e)
+
+@app.route('/error')
+def referral():
+    return request.referrer
+
+
+
 # @app.route('/')
 # def hello_world():
 #     # return "hello world"
