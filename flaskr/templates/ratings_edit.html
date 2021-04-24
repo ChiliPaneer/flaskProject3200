@@ -27,7 +27,7 @@
     <input type="text" id="type" name="type" value="{{ type }}"><br>
 
     <label for="certificate">Certificate:</label><br>
-    <select id="certificate" name="certificate" value="{{ certificate }}" type="text">
+    <select id="certificate" name="certificate" value="{{ certificate }}" type="text" required>
         <option selected hidden>{{ certificate }}</option>
         <option value="student">student</option>
         <option value="sport">sport</option>
@@ -39,7 +39,7 @@
     <br>
 
     <label for="category">Category:</label><br>
-    <select id="category" name="category"  type="text">
+    <select id="category" name="category"  type="text" required>
         <option selected hidden>{{ category }}</option>
         <option value="airplane">airplane</option>
         <option value="rotorcraft">rotorcraft</option>
@@ -59,7 +59,7 @@
 
 
 
-    <input type="submit" value = "Submit">
+    <input type="submit" class="btn btn-primary input-submit" value = "Submit">
 
 </form>
 

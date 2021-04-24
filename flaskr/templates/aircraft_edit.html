@@ -32,7 +32,7 @@
 
 
     <label for="category">Category:</label><br>
-    <select id="category" name="category" value="{{ category }}" type="text">
+    <select id="category" name="category" value="{{ category }}" type="text" required>
         <option selected hidden>{{ category }}</option>
         <option value="airplane">airplane</option>
         <option value="rotorcraft">rotorcraft</option>
@@ -40,9 +40,9 @@
         <option value="powered parachute">powered parachute</option>
         <option value="lighter than air">lighter than air</option>
         <option value="powered lift">powered lift</option>
-        <option value="weight shift control">weight shift control</option>
-    <input type="submit" value = "Submit">
-    </select>
+        <option value="weight shift control">weight shift control</option> <br>
+    </select><br>
+    <input class="btn btn-primary input-submit" type="submit" value = "Submit">
 </form>
 
 
