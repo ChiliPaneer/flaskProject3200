@@ -9,10 +9,10 @@
 1. Create a mysql schema called `python_test`
 2. Import the schema from the `flaskProject3200/databse`
 3. Clone the repository
-4. Type `python3 -m pip install -r requirements.txt` into console
-5. Copy the `configExample.py` file into a new file called `config.py` in the `flaskr/` directory
-6. Fill out the appropriate fields to connect to your database
-7. Run the project!
+5. In a new virtual enviornment type `python3 -m pip install -r requirements.txt` into console
+6. Copy the `configExample.py` file into a new file called `config.py` in the `flaskr/` directory
+7. Fill out the appropriate fields to connect to your database
+8. Run the project!
 
 ### Technical Details
 * Flask for routing and server
