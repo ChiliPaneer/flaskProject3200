@@ -14,14 +14,21 @@ import DAO.ratings as ratingDAO
 import DAO.users as userDAO
 import DAO.aircrafts as aircraftDAO
 from datetime import datetime
+from config import config
 
 # Configuring SQL Alchemy, don't touch
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
+uri = "mysql+pymysql://" + \
+      config['username'] + ":" + \
+      config['password'] + "@" + \
+      config['address'] + "/" + \
+      config['schema']
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
 
 engine = create_engine(
-    'mysql+pymysql://root:P@ssw0rd@localhost/python_test',
+    uri,
     echo=True
 )
 Session = sessionmaker(bind=engine)
@@ -391,19 +398,6 @@ def referral():
     return request.referrer
 
 
-
-# @app.route('/')
-# def hello_world():
-#     # return "hello world"
-#     session = Session()
-#
-#     # test_user = session.query(Users)[0]
-#
-#     test_log = session.query(Logs)
-#     ans = ""
-#     for l, u in session.query(Logs, Users).filter(Users.id == Logs.user_id).all():
-#         ans += str(l.id) + " " + str(l.total_time) + " " + str(u.first_name) + " " + str(u.last_name) + "<br>"
-#     return 'Hello World!' + ans
 
 
 if __name__ == '__main__':
