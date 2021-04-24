@@ -82,6 +82,20 @@ def logs_list():
         return render_template('list.html', string = 'log', data = lst)
     except IndexError:
         return redirect('/create/log')
+
+@app.route('/list/log/<userId>', methods=['POST', 'GET'])
+def logs_list_byUser(userId):
+    try:
+        d = list(logDAO.findLogsByUserId(userId))
+        print(d)
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'log', data = lst)
+    except IndexError:
+        return redirect('/create/log')
+
+
 @app.route('/list/rating', methods = ["POST",'GET'])
 def ratings_list():
     try:
