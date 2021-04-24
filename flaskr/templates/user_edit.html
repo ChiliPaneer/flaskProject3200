@@ -11,8 +11,9 @@
     <form action="/create/user", method="post">
 {% endif %}
 
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id" value="{{ id }}"><br>
+{% if id is defined %}
+    <h2>User ID: {{ id }}</h2>
+{% endif %}
 
     <label for="first_name">First name:</label><br>
     <input type="text" id="first_name" name="first_name" value="{{ first_name }}"><br>
@@ -25,7 +26,7 @@
     <input type="text" id="password" name="password" value="{{ password }}"><br>
 
     <label for="date_of_birth">Date of Birth:</label><br>
-    <input type="text" id="date_of_birth" name="date_of_birth" value="{{ date_of_birth }}"><br>
+    <input type="date" id="date_of_birth" name="date_of_birth" value="{{ date_of_birth }}"><br>
     <label for="email">Email:</label><br>
     <input type="text" id="email" name="email" value="{{ email }}"><br>
 
@@ -35,10 +36,11 @@
 
 {% if id is defined %}
     <button onclick = "window.location.href= '/delete/user/{{ id }}'" type="button" name = "delete">Delete</button>
+    <button onclick = "window.location.href= '/list/log/user/{{ id }}'" type="button" name = "user List">View User's Logs</button>
+    <button onclick = "window.location.href= '/list/rating/user/{{ id }}'" type="button" name = "rating List">View User's Ratings</button>
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 <button onclick="window.location.href = '/list/user'" type = "button" name = "userlist">Return to List</button>
-
 
 </body>
 </html>

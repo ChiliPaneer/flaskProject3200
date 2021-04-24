@@ -1,25 +1,27 @@
 '''
-ADRIAN: Update the route methods to accoutn for posting and passing in
-        parameters into imaginary dao methods (a lot of code will be stolen from DAO/<file>.py
+ADRIAN: implement rest of DAOs
+
 '''
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
+from models import Logs, Users, Aircrafts, Categories, Certificates, Ratings
 from flask import Flask, render_template, request, redirect
-from flaskr.models import db, Logs, Users, Aircrafts, CategoryEnum, CertificateEnum, Ratings
+from flaskr.models import db, Logs, Users, Aircrafts, Ratings
 import DAO.users as userDAO
 import DAO.logs as logDAO
 import DAO.ratings as ratingDAO
+import DAO.users as userDAO
 import DAO.aircrafts as aircraftDAO
 from datetime import datetime
+
 # Configuring SQL Alchemy, don't touch
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:C9Sneaky@localhost/python_test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
 
 engine = create_engine(
-    'mysql+pymysql://root:C9Sneaky@localhost/python_test',
+    'mysql+pymysql://root:P@ssw0rd@localhost/python_test',
     echo=True
 )
 Session = sessionmaker(bind=engine)
@@ -32,7 +34,7 @@ db.init_app(app)
 # TESTING
 @app.route('/users/list', methods=['GET', 'POST'])
 def findAll_users():
-    users = userDAO.findAll_users()
+    users = users_dao.findAll_users()
     return render_template('list.html', data=users)
 
 
@@ -42,34 +44,93 @@ def findAll_users():
 
 # LISTING
 @app.route('/', methods=['POST', 'GET'])
-def hello_world():
+def landing():
     return render_template('landing.html')
 
 
 @app.route('/list/user', methods=['POST', 'GET'])
 def users_list():
-    users = userDAO.findAllUsers()
-    return render_template('list.html', string='user', data=users)
-
+    try:
+        d = list(userDAO.findAllUsers())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        print(lst)
+        return render_template('list.html', string='user', data=lst)
+    except IndexError:
+        return redirect('/create/user')
 
 @app.route('/list/aircraft', methods=['POST', 'GET'])
 def aircrafts_list():
-    aircrafts = aircraftDAO.findAllAircrafts()
-    return render_template('list.html', string='aircraft', data=aircrafts)
-
+    try:
+        d = list(aircraftDAO.findAllAircrafts())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        print(lst)
+        return render_template('list.html', string='aircraft', data=lst)
+    except IndexError:
+        return redirect('/create/aircraft')
 
 @app.route('/list/log', methods=['POST', 'GET'])
 def logs_list():
-    d = list(logDAO.findAllLogs())
-    lst = [list(vars(d[0]).keys())[1:]]
-    for i in d:
-        lst.append(list(vars(i).values())[1:])
-    return render_template('list.html', string = 'log', data = lst)
+    try:
+        d = list(logDAO.findAllLogs())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'log', data = lst)
+    except IndexError:
+        return redirect('/create/log')
+
+
+@app.route('/list/log/user/<userId>', methods=['POST', 'GET'])
+def logs_list_byUser(userId):
+    try:
+        d = list(logDAO.findLogsByUserId(userId))
+        print(d)
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'log', data = lst)
+    except IndexError:
+        return redirect('/create/log')
+
+
+@app.route('/list/log/aircraft/<aircraftId>')
+def logs_list_byAircraft(aircraftId):
+    try:
+        d = list(logDAO.findLogsByAircraftId(aircraftId))
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'log', data = lst)
+    except IndexError:
+        return redirect('/create/log')
+
 
 @app.route('/list/rating', methods = ["POST",'GET'])
 def ratings_list():
-    #d = ratingDAO.findAllRatings()
-    return render_template('list.html', string = 'rating', data = d)
+    try:
+        d = list(ratingDAO.findAllRatings())
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'rating', data = lst)
+    except IndexError:
+        return redirect('/create/rating')
+
+
+@app.route('/list/rating/user/<userId>', methods = ["POST",'GET'])
+def ratings_list_byUser(userId):
+    try:
+        d = list(ratingDAO.findRatingsByUserId(userId))
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'rating', data = lst)
+    except IndexError:
+        return redirect('/create/rating')
 
 
 # UPDATING
@@ -82,21 +143,21 @@ def update_rating(id):
         type = request.form.get('type')
         instrument = request.form.get('instrument')
         user_id = request.form.get('user_id')
-        #ratingDAO.updateRating(id, certificate, category, r_class, type, instrument, user_id)
+        ratingDAO.updateRating(id, certificate, category, r_class, type, instrument, user_id)
         print(id, certificate, category, r_class, type, instrument, user_id)
         print("update")
         return redirect('/') #replace
     else:
-        # r = ratingDAO.findRatingById(id)
-        # certificate = r.getCertificate()
-        # category = r.getCategory()
-        # r_class = r.getClass()
-        # type = r.getType()
-        # instrument = r.getInstrument
-        # user_id = r.getUser_id
-        # return render_template('ratings_edit.html', certificate = certificate, category = category, r_class = r_class,
-        #                       type = type, instrument = instrument, user_id = user_id)
-        return render_template('ratings_edit.html', id = id)
+        r = ratingDAO.findRatingById(id)
+        certificate = r.certificate
+        category = r.category
+        r_class = r.airClass
+        type = r.type
+        instrument = r.instrument
+        user_id = r.user_id
+        return render_template('ratings_edit.html', id = id, certificate = certificate, category = category, r_class = r_class,
+                              type = type, instrument = instrument, user_id = user_id)
+        #return render_template('ratings_edit.html', id = id)
 
 
 @app.route('/create/user/<id>', methods=['POST','GET'])
@@ -107,21 +168,23 @@ def update_user(id):
         username = request.form.get('username')
         password = request.form.get('password')
         date_of_birth = request.form.get('date_of_birth')
+        date_of_birth = datetime.strptime(date_of_birth, "%Y-%m-%d")
         email = request.form.get('email')
-        # userDAO.updateUser(id, first_name, last_name, username, password, date_of_birth, email)
+        userDAO.updateUser(id, first_name, last_name, username, password, date_of_birth, email)
+        print(date_of_birth)
         print(id, first_name, last_name, username, password, date_of_birth, email)
         print("update")
         return redirect('/')
     else:
-        # u = userDAO.findUserById(id)
-        # first_name = u.getFirst_Name()
-        # last_name = u.getLast_name()
-        # username = u.getUsername()
-        # password = u.getPassword()
-        # date_of_birth = u.getDate_Of_Birth()
-        # email = u.getEmail()
-        #return render_template('user_edit.html', id = id, first_name=first_name, last_name=last_name, username=username, password=password, date_of_birth=date_of_birth, email=email)
-        return render_template('user_edit.html', id=id)
+        u = userDAO.findUserById(id)
+        first_name = u.first_name
+        last_name = u.last_name
+        username = u.username
+        password = u.password
+        date_of_birth = datetime.strftime(u.date_of_birth, '%Y-%m-%d')
+        email = u.email
+        return render_template('user_edit.html', id = id, first_name=first_name, last_name=last_name, username=username, password=password, date_of_birth=date_of_birth, email=email)
+        #return render_template('user_edit.html', id=id)
 
 
 
@@ -133,18 +196,19 @@ def update_aircraft(id):
         type = request.form.get('type')
         identification = request.form.get('identification')
         category = request.form.get('category')
-        #aircraftDAO.updateAircraft(id, a_class, type, identification, category)
+        aircraftDAO.updateAircraft(id, a_class, type, identification, category)
         print(id, a_class, type, identification, category)
         print("update")
         return redirect('/')
     else:
-        # #ac = aircraftDAO.findAircraftById(id)
-        # a_class = ac.getClass()
-        # a_type = ac.getType()
-        # identification = ac.getIdentification()
-        # category = ac.getCategory
-        # return render_template('aircraft_edit.html', a_class = a_class, type = a_type, identification = identification, category = category)
-        return render_template('aircraft_edit.html', id = id)
+        ac = aircraftDAO.findAircraftById(id)
+
+        a_class = ac.airClass
+        a_type = ac.type
+        identification = ac.identification
+        category = ac.category
+        return render_template('aircraft_edit.html', id = id, a_class = a_class, type = a_type, identification = identification, category = category)
+        #return render_template('aircraft_edit.html', id = id)
 
 @app.route('/create/log/<id>', methods=['POST','GET'])
 def update_log(id):
@@ -169,6 +233,7 @@ def update_log(id):
         aircraft_id = request.form.get('aircraft_id')
         remarks = request.form.get('remarks')
         date = request.form.get('date')
+        date = datetime.strptime(date,"%Y-%m-%d")
         logDAO.updateLogs(id, sic_time = sic_time, total_time = total_time, pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time, dual_received = dual_received,
         dual_given = dual_given, actual_instrument = actual_instrument, simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via, day_landings = day_landings,
         night_landings = night_landings, num_instrument_approaches = num_instrument_approaches, user_id = user_id, aircraft_id = aircraft_id, remarks = remarks, date = date)
@@ -199,7 +264,7 @@ def update_log(id):
         user_id = lg.user_id
         aircraft_id = lg.aircraft_id
         remarks = lg.remarks
-        date = lg.date
+        date = datetime.strftime(lg.date, '%Y-%m-%d')
         return render_template('log_edit.html', id = id, sic_time = sic_time, total_time = total_time,
         pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time,
         dual_received = dual_received, dual_given = dual_given, actual_instrument = actual_instrument,
@@ -221,7 +286,7 @@ def create_rating():
         type = request.form.get('type')
         instrument = request.form.get('instrument')
         user_id = request.form.get('user_id')
-        # ratingDAO.createRating(id, certificate, category, r_class, type, instrument, user_id)
+        ratingDAO.createRating(certificate, category, r_class, type, instrument, user_id)
         print('create')
         print(certificate, category, r_class, type, instrument, user_id)
         return redirect('/')  # replace
@@ -251,7 +316,7 @@ def create_log():
         user_id = request.form.get('user_id')
         aircraft_id = request.form.get('aircraft_id')
         remarks = request.form.get('remarks')
-        date = datetime.strptime(request.form.get('date'), '%dd/%mm/%yyyy')
+        date = datetime.strptime(request.form.get('date'), '%Y-%m-%d')
         logDAO.createLog(sic_time = sic_time, total_time = total_time, pic_time = pic_time, night_time = night_time, day_time = day_time, xc_time = xc_time, dual_received = dual_received,
         dual_given = dual_given, actual_instrument = actual_instrument, simulated_instrument = simulated_instrument, departure = departure, destination = destination, via = via, day_landings = day_landings,
         night_landings = night_landings, num_instrument_approaches = num_instrument_approaches, user_id = user_id, aircraft_id = aircraft_id, remarks = remarks, date = date)
@@ -260,7 +325,8 @@ def create_log():
               num_instrument_approaches, user_id, aircraft_id, date, remarks)
         return redirect('/')
     else:
-        return render_template('log_edit.html')
+        now = datetime.now()
+        return render_template('log_edit.html', date = datetime.strftime(now,'%Y-%m-%d'))
 
 
 @app.route('/create/aircraft', methods=['POST','GET'])
@@ -270,7 +336,7 @@ def create_aircraft():
         a_type = request.form.get('type')
         identification = request.form.get('identification')
         category = request.form.get('category')
-        # aircraftDAO.createAircraft(a_class, a_type, identification, category)
+        aircraftDAO.createAircraft(a_class, a_type, identification, category)
         print(a_class, a_type, identification, category)
         return redirect('/')
     else:
@@ -284,12 +350,14 @@ def create_user():
         username = request.form.get('username')
         password = request.form.get('password')
         date_of_birth = request.form.get('date_of_birth')
+        #date_of_birth = datetime.strptime(date_of_birth, "%Y-%m-%d")
         email = request.form.get('email')
-        # userDAO.createUser(first_name, last_name, username, password, date_of_birth, email)
+        userDAO.createUser(first_name, last_name, username, password, date_of_birth, email)
         print(first_name, last_name, username, password, date_of_birth, email)
         return redirect('/')
     else:
-        return render_template('user_edit.html')
+        now = datetime.now()
+        return render_template('user_edit.html', date_of_birth = datetime.strftime(now, '%Y-%m-%d'))
 
 
 
@@ -298,25 +366,25 @@ def create_user():
 
 @app.route('/delete/rating/<id>', methods = ["POST","GET"])
 def delete_rating(id):
-    #ratingDAO.deleteRating(id)
+    ratingDAO.deleteRating(id)
     print(id)
     return redirect('/')
 
 @app.route('/delete/user/<id>', methods = ["POST","GET"])
 def delete_user(id):
-    #userDAO.deleteUser(id)
+    userDAO.deleteUser(id)
     print(id)
     return redirect('/')
 
 @app.route('/delete/log/<id>', methods = ["POST","GET"])
 def delete_log(id):
-    #logDAO.deleteLog(id)
+    logDAO.deleteLog(id)
     print(id)
     return redirect('/')
 
 @app.route('/delete/aircraft/<id>', methods = ["POST","GET"])
 def delete_aircraft(id):
-    #aircraftDAO.deleteAircraft(id)
+    aircraftDAO.deleteAircraft(id)
     print(id)
     return redirect('/')
 

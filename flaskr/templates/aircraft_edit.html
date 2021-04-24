@@ -12,9 +12,11 @@
     <form action="/create/aircraft", method="post">
 {% endif %}
 
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id" value="{{ id }}"><br>
+{% if id is defined %}
+    <h2>Aircraft ID: {{ id }}</h2>
+{% endif %}
 
+<form>
     <label for="a_class">Class:</label><br>
     <input type="text" id="a_class" name="a_class" value="{{ a_class }}"><br>
 
@@ -24,16 +26,25 @@
     <label for="identification">Identification:</label><br>
     <input type="text" id="identification" name="identification" value="{{ identification }}"><br>
 
+
     <label for="category">Category:</label><br>
-    <input type="text" id="category" name="category" value="{{ category }}"><br>
-
+    <select id="category" name="category" value="{{ category }}" type="text">
+        <option selected hidden>{{ category }}</option>
+        <option value="airplane">airplane</option>
+        <option value="rotorcraft">rotorcraft</option>
+        <option value="glider">glider</option>
+        <option value="powered parachute">powered parachute</option>
+        <option value="lighter than air">lighter than air</option>
+        <option value="powered lift">powered lift</option>
+        <option value="weight shift control">weight shift control</option>
     <input type="submit" value = "Submit">
-
+    </select>
 </form>
 
 
 {% if id is defined %}
     <button onclick = "window.location.href= '/delete/aircraft/{{ id }}'" type="button" name = "delete">Delete</button>
+    <button onclick = "window.location.href= '/list/log/aircraft/{{ id }}'" type="button" name = "aircraft logs">View Aicraft Logs</button>
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 <button onclick="window.location.href = '/list/aircraft'" type = "button" name = "aircraftlist">Return to List</button>
