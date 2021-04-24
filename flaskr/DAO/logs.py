@@ -108,7 +108,7 @@ def findLogsById(id):
     return obj
 
 def findLogsByUserId(id):
-    obj = db.session.query(Logs).filter('user_id' == id)
+    obj = db.session.query(Logs).filter(Logs.user_id == id)
     return obj
 
 def findAllLogs():
