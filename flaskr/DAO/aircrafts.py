@@ -1,4 +1,3 @@
-# TODO REFACTOR AS DISCUSSED CHRISTINA
 from flask import request, render_template, make_response
 from flaskr.models import db, Logs, Users, Aircrafts,  Ratings
 from flaskr.__init__ import db

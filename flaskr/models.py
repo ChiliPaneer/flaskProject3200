@@ -65,8 +65,8 @@ class Logs(db.Model):
     night_landings = Column(Integer)
     num_instrument_approaches = Column(Integer)
     remarks = Column(String(300))
-    user_id = Column(Integer, ForeignKey('users.id', onupdate='cascade'))
-    aircraft_id = Column(Integer, ForeignKey('aircrafts.id', ondelete='cascade', onupdate='cascade'))
+    user_id = Column(Integer, ForeignKey('users.id', onupdate='cascade', ondelete='cascade'))
+    aircraft_id = Column(Integer, ForeignKey('aircrafts.id', onupdate='cascade'))
     created = Column(DATETIME, default=datetime.datetime.now)
     updated = Column(DATETIME, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 

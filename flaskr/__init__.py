@@ -18,6 +18,7 @@ from config import config
 
 # Configuring SQL Alchemy, don't touch
 app = Flask(__name__)
+#Don't edit the following, instead edit config.py (See readme if file missing)
 uri = "mysql+pymysql://" + \
       config['username'] + ":" + \
       config['password'] + "@" + \
