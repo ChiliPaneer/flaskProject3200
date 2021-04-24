@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,26 +12,47 @@
     <form action="/create/rating", method="post">
 {% endif %}
 
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id" value="{{ id }}"><br>
+{% if id is defined %}
+    <h2>Rating ID: {{ id }}</h2>
+{% endif %}
+
 
     <label for="r_class">Class:</label><br>
     <input type="text" id="r_class" name="r_class" value="{{ r_class }}"><br>
 
     <label for="type">Type:</label><br>
-    <input type="type" id="type" name="type" value="{{ type }}"><br>
+    <input type="text" id="type" name="type" value="{{ type }}"><br>
 
     <label for="certificate">Certificate:</label><br>
-    <input type="text" id="certificate" name="certificate" value="{{ certificate }}"><br>
+    <select id="certificate" name="certificate" value="{{ certificate }}" type="text">
+        <option selected hidden>{{ certificate }}</option>
+        <option value="student">student</option>
+        <option value="sport">sport</option>
+        <option value="recreational">recreational</option>
+        <option value="private">private</option>
+        <option value="commercial">commercial</option>
+        <option value="airline transport">airline transport</option>
+    </select>
+    <br>
 
     <label for="category">Category:</label><br>
-    <input type="text" id="category" name="category" value="{{ category }}"><br>
+    <select id="category" name="category"  type="text">
+        <option selected hidden>{{ category }}</option>
+        <option value="airplane">airplane</option>
+        <option value="rotorcraft">rotorcraft</option>
+        <option value="glider">glider</option>
+        <option value="powered parachute">powered parachute</option>
+        <option value="lighter than air">lighter than air</option>
+        <option value="powered lift">powered lift</option>
+        <option value="weight shift control">weight shift control</option>
+    </select>
+    <br>
 
     <label for="instrument">Instrument:</label><br>
     <input type="text" id="instrument" name="instrument" value="{{ instrument }}"><br>
 
     <label for="user_id">User ID Integer:</label><br>
-    <input type="text" id="user_id" name="user_id" value="{{ user_id }}"><br>
+    <input type="number" id="user_id" name="user_id" value="{{ user_id }}"><br>
 
 
 
@@ -41,10 +62,13 @@
 
 
 {% if id is defined %}
-    <button onclick = "window.location.href= '/delete/aircraft/{{ id }}'" type="button" name = "delete">Delete</button>
+    <button onclick = "window.location.href= '/delete/rating/{{ id }}'" type="button" name = "delete">Delete</button>
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
-<button onclick="window.location.href = '/list/aircraft'" type = "button" name = "aircraftlist">Return to List</button>
+<button onclick="window.location.href = '/list/rating'" type = "button" name = "aircraftlist">Return to List</button>
+{% if id is defined %}
+    <button onclick = "window.location.href= '/create/user/{{ user_id }}'" type="button" name = "delete">Update User</button>
+{% endif %}
 
 
 </body>
