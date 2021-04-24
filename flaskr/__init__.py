@@ -31,15 +31,6 @@ db.init_app(app)
 # Web pages routing
 
 
-# TESTING
-@app.route('/users/list', methods=['GET', 'POST'])
-def findAll_users():
-    users = users_dao.findAll_users()
-    return render_template('list.html', data=users)
-
-
-
-
 
 
 # LISTING
