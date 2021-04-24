@@ -54,6 +54,12 @@ def updateRating(id, certificate, category, airClass, type, instrument, user_id)
     db.session.commit()
 
 
+
+def findRatingsByUserId(id):
+    obj = db.session.query(Ratings).filter(Ratings.user_id == id)
+    return obj
+
+
 def deleteRating(id):
     obj = db.session.query(Ratings).filter(Ratings.id == id).first()
     db.session.delete(obj)
