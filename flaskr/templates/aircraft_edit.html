@@ -16,7 +16,7 @@
     <h2>Aircraft ID: {{ id }}</h2>
 {% endif %}
 
-
+<form>
     <label for="a_class">Class:</label><br>
     <input type="text" id="a_class" name="a_class" value="{{ a_class }}"><br>
 
@@ -38,12 +38,13 @@
         <option value="powered lift">powered lift</option>
         <option value="weight shift control">weight shift control</option>
     <input type="submit" value = "Submit">
-
+    </select>
 </form>
 
 
 {% if id is defined %}
     <button onclick = "window.location.href= '/delete/aircraft/{{ id }}'" type="button" name = "delete">Delete</button>
+    <button onclick = "window.location.href= '/list/log/aircraft/{{ id }}'" type="button" name = "aircraft logs">View Aicraft Logs</button>
 {% endif %}
 <button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 <button onclick="window.location.href = '/list/aircraft'" type = "button" name = "aircraftlist">Return to List</button>

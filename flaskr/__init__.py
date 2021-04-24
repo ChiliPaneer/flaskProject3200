@@ -44,7 +44,7 @@ def findAll_users():
 
 # LISTING
 @app.route('/', methods=['POST', 'GET'])
-def hello_world():
+def landing():
     return render_template('landing.html')
 
 
@@ -83,11 +83,24 @@ def logs_list():
     except IndexError:
         return redirect('/create/log')
 
-@app.route('/list/log/<userId>', methods=['POST', 'GET'])
+
+@app.route('/list/log/user/<userId>', methods=['POST', 'GET'])
 def logs_list_byUser(userId):
     try:
         d = list(logDAO.findLogsByUserId(userId))
         print(d)
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'log', data = lst)
+    except IndexError:
+        return redirect('/create/log')
+
+
+@app.route('/list/log/aircraft/<aircraftId>')
+def logs_list_byAircraft(aircraftId):
+    try:
+        d = list(logDAO.findLogsByAircraftId(aircraftId))
         lst = [list(vars(d[0]).keys())[1:]]
         for i in d:
             lst.append(list(vars(i).values())[1:])
@@ -106,6 +119,19 @@ def ratings_list():
         return render_template('list.html', string = 'rating', data = lst)
     except IndexError:
         return redirect('/create/rating')
+
+
+@app.route('/list/rating/user/<userId>', methods = ["POST",'GET'])
+def ratings_list_byUser(userId):
+    try:
+        d = list(ratingDAO.findRatingsByUserId(userId))
+        lst = [list(vars(d[0]).keys())[1:]]
+        for i in d:
+            lst.append(list(vars(i).values())[1:])
+        return render_template('list.html', string = 'rating', data = lst)
+    except IndexError:
+        return redirect('/create/rating')
+
 
 # UPDATING
 @app.route('/create/rating/<id>', methods = ['POST','GET'])
