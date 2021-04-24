@@ -17,11 +17,11 @@ from datetime import datetime
 
 # Configuring SQL Alchemy, don't touch
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:C9Sneaky@localhost/python_test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:P@ssw0rd@localhost/python_test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
 
 engine = create_engine(
-    'mysql+pymysql://root:C9Sneaky@localhost/python_test',
+    'mysql+pymysql://root:P@ssw0rd@localhost/python_test',
     echo=True
 )
 Session = sessionmaker(bind=engine)
