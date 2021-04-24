@@ -65,12 +65,12 @@
 
 
 {% if id is defined %}
-    <button  class="btn btn-primary" onclick = "window.location.href= '/delete/rating/{{ id }}'" type="button" name = "delete">Delete</button>
+    <button  class="btn btn-danger" onclick = "window.location.href= '/delete/rating/{{ id }}'" type="button" name = "delete">Delete</button>
 {% endif %}
-<button  class="btn btn-primary" onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
-<button  class="btn btn-primary" onclick="window.location.href = '/list/rating'" type = "button" name = "aircraftlist">Return to List</button>
+<button  class="btn btn-secondary" onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
+<button  class="btn btn-secondary" onclick="window.location.href = '/list/rating'" type = "button" name = "aircraftlist">Return to List</button>
 {% if id is defined %}
-    <button  class="btn btn-primary" onclick = "window.location.href= '/create/user/{{ user_id }}'" type="button" name = "delete">Update User</button>
+    <button  class="btn btn-success" onclick = "window.location.href= '/create/user/{{ user_id }}'" type="button" name = "delete">Update User</button>
 {% endif %}
 
 

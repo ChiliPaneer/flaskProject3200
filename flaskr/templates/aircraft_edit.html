@@ -47,11 +47,11 @@
 
 
 {% if id is defined %}
-    <button  class="btn btn-primary" onclick = "window.location.href= '/delete/aircraft/{{ id }}'" type="button" name = "delete">Delete</button>
+    <button  class="btn btn-danger" onclick = "window.location.href= '/delete/aircraft/{{ id }}'" type="button" name = "delete">Delete</button>
     <button  class="btn btn-primary" onclick = "window.location.href= '/list/log/aircraft/{{ id }}'" type="button" name = "aircraft logs">View Aicraft Logs</button>
 {% endif %}
-<button  class="btn btn-primary" onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
-<button  class="btn btn-primary" onclick="window.location.href = '/list/aircraft'" type = "button" name = "aircraftlist">Return to List</button>
+<button  class="btn btn-secondary" onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
+<button  class="btn btn-secondary" onclick="window.location.href = '/list/aircraft'" type = "button" name = "aircraftlist">Return to List</button>
 
 </body>
 </html>

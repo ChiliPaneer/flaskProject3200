@@ -38,12 +38,12 @@
 </form>
 
 {% if id is defined %}
-    <button  class="btn btn-primary" onclick = "window.location.href= '/delete/user/{{ id }}'" type="button" name = "delete">Delete</button>
+    <button  class="btn btn-danger" onclick = "window.location.href= '/delete/user/{{ id }}'" type="button" name = "delete">Delete</button>
     <button  class="btn btn-primary" onclick = "window.location.href= '/list/log/user/{{ id }}'" type="button" name = "user List">View User's Logs</button>
     <button  class="btn btn-primary" onclick = "window.location.href= '/list/rating/user/{{ id }}'" type="button" name = "rating List">View User's Ratings</button>
 {% endif %}
-<button  class="btn btn-primary" onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
-<button  class="btn btn-primary" onclick="window.location.href = '/list/user'" type = "button" name = "userlist">Return to List</button>
+<button  class="btn btn-secondary" onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
+<button  class="btn btn-secondary" onclick="window.location.href = '/list/user'" type = "button" name = "userlist">Return to List</button>
 
 </body>
 </html>

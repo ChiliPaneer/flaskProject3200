@@ -15,19 +15,28 @@ body {
 }
 
 button {
-    margin: 10px 10px 10px auto !important;
+    margin: 10px 10px 10px 0px !important;
     max-width: 240px;
 
 }
 
+.landing-title{
+    text-align: center;
+}
 .landing-box {
     display: flex;
     flex-direction: column;
+
     margin-right:auto;
     margin-left:auto;
 }
 
+.landing-box > button {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 140px !important;
+}
 .input-submit {
-    margin: 10px 10px 10px auto !important;
+    margin: 10px 10px 10px 0px !important;
 
 }
