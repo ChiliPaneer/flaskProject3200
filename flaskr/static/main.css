@@ -1,4 +1,33 @@
-body {
+html {
+    background-color: ghostwhite !important;
+    padding: 5px;
 
 }
 
+h1 {
+    text-transform: capitalize;
+}
+
+body {
+    background-color: ghostwhite !important;
+    padding: 30px;
+
+}
+
+button {
+    margin: 10px 10px 10px auto !important;
+    max-width: 240px;
+
+}
+
+.landing-box {
+    display: flex;
+    flex-direction: column;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+.input-submit {
+    margin: 10px 10px 10px auto !important;
+
+}

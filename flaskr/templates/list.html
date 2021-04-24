@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ string }}</title>
     <style>
         table, th, td {
             border: 1px solid black;
@@ -29,14 +29,14 @@
 <h1>{{ string }}</h1>
 
 <button class="btn btn-primary" onclick = "window.location.href= '/create/{{ string }}'" type="button" name = "create">Create New {{ string }}</button>
-<button onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
+<button  class="btn btn-primary" onclick="window.location.href = '/'" type = "button" name = "home">Return to Landing</button>
 
 <h3>Click on an entry in the table to edit the entry</h3>
 
 
 
 
-<table style = "width:100%">
+<table style = "width:50%" class="table table-striped">
     <tr> {# Head of the table #}
         {% for item in data[0] %}
             <th>{{ item }}</th>
